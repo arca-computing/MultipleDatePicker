@@ -49,7 +49,11 @@
 
 
           <h2><a class="anchor"><span class="octicon octicon-link"></span></a>Time to use it</h2>
-          
+          <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Include files</h3>
+          <p>If you are using bower and grunt, you can use <a href="https://github.com/taptapship/wiredep">wiredep</a> to auto include dependencies in your html file. If you want to include files manually, add those two :</p>
+          <pre><code>&lt;script type="text/javascript" src="multipleDatePicker.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="multiple-date-picker.css"/&gt;</code></pre>
+
           <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add it to your angular app</h3>
           <pre><code>var app = angular.module('myApp', ['multipleDatePicker']);</code></pre>
 
@@ -104,7 +108,14 @@
         <div><multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/></div>
         <hr>
 
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>What's next ?</h4> 
+        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Dependencies</h3> 
+        <p>The calendar uses 3 dependencies you must add to your project : <a href="http://angularjs.org/">angular</a> of course, <a href="http://lodash.com">lodash</a> for some operations and <a href="http://momentjs.com/">moment.js</a>.</p>
+        <p>Because we use moment.js, you can load a language file and change the calendar language (days and months names), like this :</p>
+        <pre><code>moment.lang('fr');
+var app = angular.module...</code></pre>
+        <p>Week days order, week days names and month + year format cannot be changed with an option.</p>
+
+        <h2><a class="anchor"><span class="octicon octicon-link"></span></a>What's next ?</h2> 
         <p>We created this directive to have a simple calendar with multi-dates selection. We will keep it simple but any improvement is welcome.</p>
 
         <footer>
