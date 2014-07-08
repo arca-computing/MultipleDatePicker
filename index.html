@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="demoApp">
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/multiple-date-picker.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/multiple-date-picker.css" media="screen" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -19,13 +19,13 @@
     <title>Multipledatepicker by arca-computing</title>
   </head>
 
-  <body>
+  <body ng-controller="demoController">
     <div id="container">
       <div class="inner">
 
         <header>
           <h1>Multipledatepicker</h1>
-          <h2>angular simple multiple date picker</h2>
+          <h2>angular simple multiple dates picker</h2>
         </header>
 
         <section id="downloads" class="clearfix">
@@ -54,19 +54,58 @@
           <pre><code>var app = angular.module('myApp', ['multipleDatePicker']);</code></pre>
 
           <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add it in your html</h3>
-          {% highlight html %}
-          {% include addToHtml.html %}
-          {% endhighlight %}
 
-          <pre><code>
-            [...]
-            <div>
-              <multiple-date-picker/>
-            </div>
-            [...]
-          </code></pre>
-
+          <pre><code>&lt;div&gt;
+  &lt;multiple-date-picker/&gt;
+&lt;/div&gt;</code></pre>
+<div><multiple-date-picker/></div>
+          <br>
+          <p>It will use the max width of it's parent, so If you want to reduce it specify a width (or use Bootstrap/Foundation).</p>
+          <pre><code>&lt;div style="width:50%"&gt;
+  &lt;multiple-date-picker/&gt;
+&lt;/div&gt;</code></pre>
+<div style="width:50%"><multiple-date-picker/></div>
         </section>
+        <hr>
+        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add some options</h3>          
+        <p>You can give option directly in the html.</p>
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Callback</h4>          
+        <p>The callback will be called everytime a date is un/selected. <strong>Be aware that the date (timestamp) given to the callback is a day at midnight</strong>.</p>
+        <p>This exemple shows how to pass a scope function that will prompt an alert with infos.</p>
+        <pre><code>&lt;multiple-date-picker callback="logInfos(timestamp, selected);"/&gt;</code></pre>
+        <div><multiple-date-picker callback="logInfos(timestamp, selected);"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-off</h4>          
+        <p>Those dates are not selectable (like bank days). It's an array of milliseconds timestamps.</p>
+        <pre><code>&lt;multiple-date-picker days-off="[1404770400000, 1405029600000]"/&gt;</code></pre>
+        <p>The live demo reprensent the 14h day off this month with this code sample. oneDayOff is a scope variable.</p>
+        <pre><code>&lt;multiple-date-picker days-off="oneDayOff"/&gt;</code></pre>
+        <div><multiple-date-picker days-off="oneDayOff"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Week-days-off</h4>          
+        <p>Those are days for every week that are not selectable. Sunday = 0, Monday = 1 ... Saturday = 6.</p>
+        <pre><code>&lt;multiple-date-picker week-days-off="[0, 3]"/&gt;</code></pre>
+        <div><multiple-date-picker week-days-off="[0, 3]"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-selected</h4>          
+        <p>Those are pre-selected dates when building the calendar. It's an array of milliseconds timestamps.</p>
+        <pre><code>&lt;multiple-date-picker days-selected="[1404770400000, 1405029600000]"/&gt;</code></pre>
+        <p>The live demo reprensent the 4th, 5th and 8th day this month with this code sample. selectedDays is a scope variable.</p>
+        <pre><code>&lt;multiple-date-picker days-off="selectedDays"/&gt;</code></pre>
+        <div><multiple-date-picker days-selected="selectedDays"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Let's get serious</h4> 
+        <p>You can (of course) use all options at the same time.</p>
+        <pre><code>&lt;multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/&gt;</code></pre>
+        <div><multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>What's next ?</h4> 
+        <p>We created this directive to have a simple calendar with multi-dates selection. We will keep it simple but any improvement is welcome.</p>
 
         <footer>
           Multipledatepicker is maintained by <a href="https://github.com/arca-computing">arca-computing</a><br>
