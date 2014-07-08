@@ -1,0 +1,30 @@
+{
+  "name": "MultipleDatePicker",
+  "version": "1.0.0",
+  "authors": [
+    "mgohin <mgohin@arca-computing.fr>"
+  ],
+  "description": "Angular directive to show a calendar and select multiple dates",
+  "main": ["dist/multipleDatePicker.min.js", "dist/multiple-date-picker.css"],
+  "keywords": [
+    "angular",
+    "directive",
+    "calendar",
+    "picker",
+    "date",
+    "multiple"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.2.15",
+    "lodash": "2.4.1",
+    "moment": "2.7.0"
+  }
+}

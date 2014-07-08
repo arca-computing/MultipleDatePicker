@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+<head>
+	<title>MultipleDatePicker demo page</title>
+
+	<link rel="stylesheet" href="../dist/multiple-date-picker.css">
+	<style media="screen" type="text/css">
+		blockquote{
+			background-color: #eee;
+			padding: 20px;
+		}
+	</style>
+
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../bower_components/moment/moment.js"></script>
+	<script type="text/javascript" src="../bower_components/lodash/dist/lodash.js"></script>
+	<script type="text/javascript" src="../dist/multipleDatePicker.min.js"></script>	
+	<script type="text/javascript" src="app.js"></script>	
+</head>
+<body ng-controller="demoController">
+	<h1>MultipleDatePicker demo page</h1>
+	<p>
+		We use here some functions and variables from module scope to provide exemples always available for the current month, please check app.js to know what is inside.
+	</p>
+	<p>
+		Don't forget to include the dependency in your app
+	</p>
+	<blockquote>
+		var app = angular.module('myApp', ['multipleDatePicker']);
+	</blockquote>
+	<hr>
+	<h3>No options, no callback, 50% screen width</h3>	
+	<blockquote>
+		&lt;div style="width: 50%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 50%">
+		<multiple-date-picker/>
+	</div>
+	<hr>
+	<h3>Callback open alert with infos</h3>
+	<blockquote>
+		&lt;div style="width: 25%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker callback="logInfos(timestamp, selected);"/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 25%">
+		<multiple-date-picker callback="logInfos(timestamp, selected);"/>
+	</div>	
+	<hr>
+	<h3>Don't want to work Sundays and Wednesdays ?</h3>
+	<blockquote>
+		&lt;div style="width: 25%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker week-days-off="[0, 3]" callback="logInfos(timestamp, selected);"/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 25%">
+		<multiple-date-picker week-days-off="[0, 3]" callback="logInfos(timestamp, selected);"/>
+	</div>	
+	<hr>
+	<h3>14th is bank holiday, can't use that day</h3>
+	<blockquote>
+		&lt;div style="width: 25%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker days-off="oneDayOff" callback="logInfos(timestamp, selected);"/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 25%">
+		<multiple-date-picker days-off="oneDayOff" callback="logInfos(timestamp, selected);"/>
+	</div>	
+	<hr>
+	<h3>4th, 5th and 8th already selected</h3>
+	<blockquote>
+		&lt;div style="width: 25%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker days-selected="selectedDays"/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 25%">
+		<multiple-date-picker days-selected="selectedDays"/>
+	</div>	
+	<hr>
+	<h3>Combine everything \o/</h3>
+	<blockquote>
+		&lt;div style="width: 25%"&gt;</br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/&gt;</br>
+		&lt;/div&gt;
+	</blockquote>
+	<div style="width: 25%">
+		<multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/>
+	</div>	
+</body>
+</html>

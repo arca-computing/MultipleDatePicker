@@ -1,0 +1,87 @@
+@border-color: #eee;
+
+@empty-day-background: #fafafa;
+
+@non-pickable-day-background: #eee;
+@non-pickable-day-color: #bbb;
+
+@pickable-day-non-picked-background: #fff;
+@pickable-day-non-picked-color: #000;
+
+@pickable-day-picked-background: #C6000B;
+@pickable-day-picked-color: #fff;
+
+.text-center{
+  text-align: center;
+}
+
+.multiple-date-picker{
+  user-select: none;
+}
+.multiple-date-picker, .picker-top-row, .picker-days-week-row, .picker-days-row{
+  width: 100%;
+}
+
+.picker-top-row > div{
+  display: inline-block;
+}
+
+.picker-navigate{
+  width: 16.66%;
+}
+
+.picker-month{
+  width: 66.66%;
+}
+
+.picker-days-week-row > div{
+  width:14.28%;
+  display: inline-block;
+}
+
+.picker-days-row > div{
+  width:14.28%;
+  display: inline-block;
+}
+
+.picker-days-row > div{
+  width:14.28%;
+  display: inline-block;
+}
+
+.picker-top-row, .picker-day{
+  padding: 10px 0;
+}
+
+.picker-day{
+  background-color: @pickable-day-non-picked-background;
+  border: 1px solid @border-color;
+  box-sizing: border-box;
+  color:@pickable-day-non-picked-color;
+}
+
+.picker-day:hover{
+  background-color: @pickable-day-picked-background;
+  color: @pickable-day-picked-color;
+  cursor: pointer;
+}
+
+.picker-day.picker-selected{
+  background-color: @pickable-day-picked-background;
+  color: @pickable-day-picked-color;
+}
+
+.picker-day.picker-off, .picker-day.picker-off:hover{
+  background-color: @non-pickable-day-background;
+  color: @non-pickable-day-color;
+  cursor: default;
+}
+
+.picker-day.picker-empty, .picker-day.picker-empty:hover{
+  background-color: @empty-day-background;
+  cursor: default;
+}
+
+.picker-navigate:hover{
+  cursor: pointer;
+}
