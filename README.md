@@ -2,11 +2,7 @@
 MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates, a callback is called, you can specify some off days or already selected days.
 
 #Want to check the demo page ?
-You must accomplish stuff before :
-        
-        npm install
-        bower install
-        grunt
+[http://arca-computing.github.io/MultipleDatePicker/](http://arca-computing.github.io/MultipleDatePicker/)
 
 #First install it
 **Using Bower**
@@ -18,6 +14,13 @@ You must accomplish stuff before :
         https://github.com/arca-computing/MultipleDatePicker.git      
         
 #How to use
+###Include files
+If you are using bower and grunt, you can use <a href="https://github.com/taptapship/wiredep">wiredep</a> to auto include dependencies in your html file. If you want to include files manually, add those two :
+```html
+<script type="text/javascript" src="multipleDatePicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="multiple-date-picker.css"/>
+```
+
 ###Add it to your app
 ```javascript
 var app = angular.module('myApp', ['multipleDatePicker']);
@@ -74,6 +77,15 @@ ex : 2 dates selected when building the calendar
 ```javascript
 <multiple-date-picker days-selected="[1404770400000, 1405029600000]"/>
 ```
+
+#Dependencies
+The calendar uses 3 dependencies you must add to your project : angular of course, lodash for some operations and moment.js.
+Because we use moment.js, you can load a language file and change the calendar language (days and months names), like this :
+```javascript
+moment.lang('fr');
+var app = angular.module...
+```
+Week days order, week days names and month + year format cannot be changed with an option.
 
 #What's next ?
 We created this directive to have a simple calendar with multi-dates selection. We will keep it simple but any improvement is welcome.
