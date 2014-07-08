@@ -76,6 +76,7 @@ angular.module('multipleDatePicker', [])
 
             scope.month = scope.month || moment().startOf('day');
             scope.days = [];
+            scope.convertedDaysSelected = scope.convertedDaysSelected || [];
 
             /*To display days of week names in moment.lang*/
             var momentDaysOfWeek = moment().lang()._weekdaysMin;
@@ -90,6 +91,13 @@ angular.module('multipleDatePicker', [])
             scope.toggleDay = function(momentDate){
                 if(momentDate.selectable){
                     momentDate.selected = !momentDate.selected;
+                    if(momentDate.selected){
+                        scope.convertedDaysSelected.push(momentDate);
+                    }else{
+                        _.remove(scope.convertedDaysSelected, function(date){
+                            return date.valueOf() === momentDate.valueOf();
+                        });
+                    }
                     if(typeof(scope.callback) === "function"){
                         scope.callback({timestamp:momentDate.valueOf(), selected:momentDate.selected});
                     }
