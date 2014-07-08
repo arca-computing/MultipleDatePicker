@@ -1,6 +1,13 @@
 #What is MultipleDatePicker ?
 MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates, a callback is called, you can specify some off days or already selected days.
 
+#Want to check the demo page ?
+You must accomplish stuff before :
+        
+        npm install
+        bower install
+        grunt
+
 #First install it
 **Using Bower**
         
