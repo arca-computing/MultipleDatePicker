@@ -49,7 +49,7 @@ angular.module('multipleDatePicker', [])
                         '</div>'+
                         '<div class="picker-days-row">'+
                             '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-                            '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay(day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+                            '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay(day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable}">{{day ? day.format(\'D\') : \'\'}}</div>'+
                             '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
                         '</div>'+
                     '</div>',
@@ -97,6 +97,7 @@ angular.module('multipleDatePicker', [])
                         _.remove(scope.convertedDaysSelected, function(date){
                             return date.valueOf() === momentDate.valueOf();
                         });
+                        momentDate.hover = false;
                     }
                     if(typeof(scope.callback) === "function"){
                         scope.callback({timestamp:momentDate.valueOf(), selected:momentDate.selected});
@@ -140,17 +141,24 @@ angular.module('multipleDatePicker', [])
                     lastDayOfMonth = moment(firstDayOfMonth).endOf('month'),
                     maxDays = lastDayOfMonth.date();
 
-                scope.emptyFirstDays = _.range(firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1);
+                scope.emptyFirstDays = [];
+                for (var i = firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1; i >= 0; i--) {
+                    scope.emptyFirstDays.push({});
+                }
+                //_.range(firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1);
 
-                for (var i = 0; i < maxDays; i++) {
+                for (var j = 0; j < maxDays; j++) {
                     var date = moment(previousDay.add('days', 1));
                     date.selectable = !scope.isDayOff(scope, date);
                     date.selected = scope.isSelected(scope, date);
                     days.push(date);
                 }
 
-                scope.emptyLastDays = _.range(7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()));
-
+                //scope.emptyLastDays = _.range(7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()));
+                scope.emptyLastDays = [];
+                for (var k = 7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()); k >= 0; k--) {
+                    scope.emptyLastDays.push({});
+                }
                 scope.days = days;
             };
 

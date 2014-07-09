@@ -60,7 +60,7 @@
   color:@pickable-day-non-picked-color;
 }
 
-.picker-day:hover{
+.picker-day.hover{
   background-color: @pickable-day-picked-background;
   color: @pickable-day-picked-color;
   cursor: pointer;
@@ -71,13 +71,13 @@
   color: @pickable-day-picked-color;
 }
 
-.picker-day.picker-off, .picker-day.picker-off:hover{
+.picker-day.picker-off, .picker-day.picker-off.hover{
   background-color: @non-pickable-day-background;
   color: @non-pickable-day-color;
   cursor: default;
 }
 
-.picker-day.picker-empty, .picker-day.picker-empty:hover{
+.picker-day.picker-empty, .picker-day.picker-empty.hover{
   background-color: @empty-day-background;
   cursor: default;
 }

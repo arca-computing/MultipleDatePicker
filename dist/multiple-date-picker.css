@@ -56,7 +56,7 @@
   color: #000;
 }
 
-.picker-day:hover {
+.picker-day.hover {
   background-color: #c6000b;
   color: #fff;
   cursor: pointer;
@@ -68,14 +68,14 @@
 }
 
 .picker-day.picker-off,
-.picker-day.picker-off:hover {
+.picker-day.picker-off.hover {
   background-color: #eee;
   color: #bbb;
   cursor: default;
 }
 
 .picker-day.picker-empty,
-.picker-day.picker-empty:hover {
+.picker-day.picker-empty.hover {
   background-color: #fafafa;
   cursor: default;
 }
