@@ -142,10 +142,9 @@ angular.module('multipleDatePicker', [])
                     maxDays = lastDayOfMonth.date();
 
                 scope.emptyFirstDays = [];
-                for (var i = firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1; i >= 0; i--) {
+                for (var i = firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1; i > 0; i--) {
                     scope.emptyFirstDays.push({});
                 }
-                //_.range(firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1);
 
                 for (var j = 0; j < maxDays; j++) {
                     var date = moment(previousDay.add('days', 1));
@@ -154,9 +153,8 @@ angular.module('multipleDatePicker', [])
                     days.push(date);
                 }
 
-                //scope.emptyLastDays = _.range(7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()));
                 scope.emptyLastDays = [];
-                for (var k = 7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()); k >= 0; k--) {
+                for (var k = 7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()); k > 0; k--) {
                     scope.emptyLastDays.push({});
                 }
                 scope.days = days;
