@@ -154,7 +154,7 @@ angular.module('multipleDatePicker', [])
                 }
 
                 scope.emptyLastDays = [];
-                for (var k = 7 - (lastDayOfMonth === 0 ? 7 : lastDayOfMonth.day()); k > 0; k--) {
+                for (var k = 7 - (lastDayOfMonth.day() === 0 ? 7 : lastDayOfMonth.day()); k > 0; k--) {
                     scope.emptyLastDays.push({});
                 }
                 scope.days = days;
