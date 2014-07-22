@@ -2,6 +2,8 @@
 
 @empty-day-background: #fafafa;
 
+@picker-day-today: #00a3ff;
+
 @non-pickable-day-background: #eee;
 @non-pickable-day-color: #bbb;
 
@@ -58,6 +60,11 @@
   border: 1px solid @border-color;
   box-sizing: border-box;
   color:@pickable-day-non-picked-color;
+}
+
+.picker-day.today, .picker-day.today.hover{
+  color: @picker-day-today;
+  font-weight: bold;
 }
 
 .picker-day.hover{

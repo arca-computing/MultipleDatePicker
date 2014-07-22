@@ -49,7 +49,7 @@ angular.module('multipleDatePicker', [])
                         '</div>'+
                         '<div class="picker-days-row">'+
                             '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-                            '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay(day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+                            '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay(day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
                             '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
                         '</div>'+
                     '</div>',
@@ -138,6 +138,7 @@ angular.module('multipleDatePicker', [])
                 var previousDay = moment(scope.month).date(0),
                     firstDayOfMonth = moment(scope.month).date(1),
                     days = [],
+                    now = moment(),
                     lastDayOfMonth = moment(firstDayOfMonth).endOf('month'),
                     maxDays = lastDayOfMonth.date();
 
@@ -150,6 +151,7 @@ angular.module('multipleDatePicker', [])
                     var date = moment(previousDay.add('days', 1));
                     date.selectable = !scope.isDayOff(scope, date);
                     date.selected = scope.isSelected(scope, date);
+                    date.today = date.isSame(now, 'day');
                     days.push(date);
                 }
 

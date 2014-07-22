@@ -56,6 +56,12 @@
   color: #000;
 }
 
+.picker-day.today,
+.picker-day.today.hover {
+  color: #00a3ff;
+  font-weight: 700;
+}
+
 .picker-day.hover {
   background-color: #c6000b;
   color: #fff;
