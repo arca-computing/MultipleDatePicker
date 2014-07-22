@@ -56,6 +56,15 @@
   color: #000;
 }
 
+.picker-day.today,
+.picker-day.today.hover,
+.picker-day.today.picker-selected,
+.picker-day.today.picker-off,
+.picker-day.today.picker-off.hover {
+  color: #00a3ff;
+  font-weight: 700;
+}
+
 .picker-day.hover {
   background-color: #c6000b;
   color: #fff;
