@@ -135,7 +135,7 @@ angular.module('multipleDatePicker', [])
 
             /*Generate the calendar*/
             scope.generate = function(){
-                var previousDay = moment(scope.month).date(0),
+                var previousDay = moment.utc(scope.month).date(0),
                     firstDayOfMonth = moment(scope.month).date(1),
                     days = [],
                     now = moment(),
