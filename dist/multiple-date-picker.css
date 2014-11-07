@@ -24,6 +24,16 @@
   width: 16.66%;
 }
 
+.picker-navigate:hover {
+  cursor: pointer;
+}
+
+.picker-navigate.disabled,
+.picker-navigate.disabled:hover {
+  color: #ddd;
+  cursor: default;
+}
+
 .picker-month {
   width: 66.66%;
 }
@@ -87,8 +97,4 @@
 .picker-day.picker-empty.hover {
   background-color: #fafafa;
   cursor: default;
-}
-
-.picker-navigate:hover {
-  cursor: pointer;
 }

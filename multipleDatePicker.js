@@ -36,13 +36,23 @@ angular.module('multipleDatePicker', [])
             * Type: array of milliseconds timestamps
             * Days not selectables
             * */
-            daysOff: '='
+            daysOff: '=',
+            /*
+             * Type: boolean
+             * if true can't go back in months before today's month
+             * */
+            disallowBackPastMonths: '=',
+            /*
+             * Type: boolean
+             * if true can't go in futur months after today's month
+             * */
+            disallowGoFuturMonths: '='
         },
         template: '<div class="multiple-date-picker">'+
                         '<div class="picker-top-row">'+
-                            '<div class="text-center picker-navigate" ng-click="previousMonth()">&lt;</div>'+
+                            '<div class="text-center picker-navigate" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>'+
                             '<div class="text-center picker-month">{{month.format(\'MMMM YYYY\')}}</div>'+
-                            '<div class="text-center picker-navigate" ng-click="nextMonth()">&gt;</div>'+
+                            '<div class="text-center picker-navigate" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>'+
                         '</div>'+
                         '<div class="picker-days-week-row">'+
                             '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>'+
@@ -54,6 +64,16 @@ angular.module('multipleDatePicker', [])
                         '</div>'+
                     '</div>',
         link: function(scope){
+            /*utility functions*/
+            var checkNavigationButtons = function(){
+                var today = moment(),
+                    previousMonth = moment(scope.month).subtract('month', 1),
+                    nextMonth = moment(scope.month).add('month', 1);
+                scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
+                scope.disableNextButton= scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
+            };
+
+            /*scope functions*/
             scope.$watch('daysSelected', function(newValue) {
                 if(newValue){
                     var momentDates = [];
@@ -77,6 +97,8 @@ angular.module('multipleDatePicker', [])
             scope.month = scope.month || moment().startOf('day');
             scope.days = [];
             scope.convertedDaysSelected = scope.convertedDaysSelected || [];
+            scope.disableBackButton = false;
+            scope.disableNextButton = false;
 
             /*To display days of week names in moment.lang*/
             var momentDaysOfWeek = moment().lang()._weekdaysMin;
@@ -107,14 +129,18 @@ angular.module('multipleDatePicker', [])
 
             /*Navigate to previous month*/
             scope.previousMonth = function(){
-                scope.month = scope.month.subtract('month', 1);
-                scope.generate();
+                if(!scope.disableBackButton){
+                    scope.month = scope.month.subtract('month', 1);
+                    scope.generate();
+                }
             };
 
             /*Navigate to next month*/
             scope.nextMonth = function(){
-                scope.month = scope.month.add('month', 1);
-                scope.generate();
+                if(!scope.disableNextButton){
+                    scope.month = scope.month.add('month', 1);
+                    scope.generate();
+                }
             };
 
             /*Check if the date is off : unselectable*/
@@ -160,6 +186,7 @@ angular.module('multipleDatePicker', [])
                     scope.emptyLastDays.push({});
                 }
                 scope.days = days;
+                checkNavigationButtons();
             };
 
             scope.generate();
