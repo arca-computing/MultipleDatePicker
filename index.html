@@ -71,16 +71,16 @@
 <div style="width:50%"><multiple-date-picker/></div>
         </section>
         <hr>
-        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add some options</h3>          
+        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add some options</h3>
         <p>You can give option directly in the html.</p>
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Callback</h4>          
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Callback</h4>
         <p>The callback will be called everytime a date is un/selected. <strong>Be aware that the date (timestamp) given to the callback is a day at midnight</strong>.</p>
         <p>This exemple shows how to pass a scope function that will prompt an alert with infos.</p>
         <pre><code>&lt;multiple-date-picker callback="logInfos(timestamp, selected);"/&gt;</code></pre>
         <div><multiple-date-picker callback="logInfos(timestamp, selected);"/></div>
         <hr>
 
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-off</h4>          
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-off</h4>
         <p>Those dates are not selectable (like bank days). It's an array of milliseconds timestamps.</p>
         <pre><code>&lt;multiple-date-picker days-off="[1404770400000, 1405029600000]"/&gt;</code></pre>
         <p>The live demo reprensent the 14h day off this month with this code sample. oneDayOff is a scope variable.</p>
@@ -88,13 +88,13 @@
         <div><multiple-date-picker days-off="oneDayOff"/></div>
         <hr>
 
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Week-days-off</h4>          
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Week-days-off</h4>
         <p>Those are days for every week that are not selectable. Sunday = 0, Monday = 1 ... Saturday = 6.</p>
         <pre><code>&lt;multiple-date-picker week-days-off="[0, 3]"/&gt;</code></pre>
         <div><multiple-date-picker week-days-off="[0, 3]"/></div>
         <hr>
 
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-selected</h4>          
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-selected</h4>
         <p>Those are pre-selected dates when building the calendar. It's an array of milliseconds timestamps.</p>
         <pre><code>&lt;multiple-date-picker days-selected="[1404770400000, 1405029600000]"/&gt;</code></pre>
         <p>The live demo reprensent the 4th, 5th and 8th day this month with this code sample. selectedDays is a scope variable.</p>
@@ -102,20 +102,32 @@
         <div><multiple-date-picker days-selected="selectedDays"/></div>
         <hr>
 
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Let's get serious</h4> 
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Disallow-back-past-months</h4>
+        <p>If true the back button to go previous month will be disabled if you are on today's month, so you can't go in past month</p>
+        <pre><code>&lt;multiple-date-picker disallow-back-past-months="true"/&gt;</code></pre>
+        <div><multiple-date-picker disallow-back-past-months="true"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Disallow-go-futur-months</h4>
+        <p>If true the back button to go next month will be disabled if you are on today's month, so you can't go the futur</p>
+        <pre><code>&lt;multiple-date-picker disallow-go-futur-months="true"/&gt;</code></pre>
+        <div><multiple-date-picker disallow-go-futur-months="true"/></div>
+        <hr>
+
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Let's get serious</h4>
         <p>You can (of course) use all options at the same time.</p>
         <pre><code>&lt;multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/&gt;</code></pre>
         <div><multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/></div>
         <hr>
 
-        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Dependencies</h3> 
+        <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Dependencies</h3>
         <p>The calendar uses 3 dependencies you must add to your project : <a href="http://angularjs.org/">angular</a> of course, <a href="http://lodash.com">lodash</a> for some operations and <a href="http://momentjs.com/">moment.js</a>.</p>
         <p>Because we use moment.js, you can load a language file and change the calendar language (days and months names), like this :</p>
         <pre><code>moment.lang('fr');
 var app = angular.module...</code></pre>
         <p>Week days order, week days names and month + year format cannot be changed with an option.</p>
 
-        <h2><a class="anchor"><span class="octicon octicon-link"></span></a>What's next ?</h2> 
+        <h2><a class="anchor"><span class="octicon octicon-link"></span></a>What's next ?</h2>
         <p>We created this directive to have a simple calendar with multi-dates selection. We will keep it simple but any improvement is welcome.</p>
 
         <footer>
@@ -123,7 +135,7 @@ var app = angular.module...</code></pre>
           This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
-        
+
       </div>
     </div>
   </body>
