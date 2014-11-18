@@ -25,18 +25,18 @@ angular.module('multipleDatePicker', [])
             * Type: array of milliseconds timestamps
             * Days already selected
             * */
-            daysSelected: '=',
+            daysSelected: '=?',
             /*
             * Type: array of integers
             * Recurrent week days not selectables
             * /!\ Sunday = 0, Monday = 1 ... Saturday = 6
             * */
-            weekDaysOff: '=',
+            weekDaysOff: '=?',
             /*
             * Type: array of milliseconds timestamps
             * Days not selectables
             * */
-            daysOff: '=',
+            daysOff: '=?',
             /*
              * Type: boolean
              * if true can't go back in months before today's month
@@ -64,6 +64,7 @@ angular.module('multipleDatePicker', [])
                         '</div>'+
                     '</div>',
         link: function(scope){
+
             /*utility functions*/
             var checkNavigationButtons = function(){
                 var today = moment(),
@@ -77,26 +78,32 @@ angular.module('multipleDatePicker', [])
             scope.$watch('daysSelected', function(newValue) {
                 if(newValue){
                     var momentDates = [];
-                    _.each(newValue, function(timestamp){
+                    newValue.map(function(timestamp){
                         momentDates.push(moment(timestamp));
-                    });
+                    })
                     scope.convertedDaysSelected = momentDates;
                     scope.generate();
                 }
             });
+
             scope.$watch('callback', function() {
                 scope.generate();
             });
+
             scope.$watch('weekDaysOff', function() {
                 scope.generate();
             });
+
             scope.$watch('daysOff', function() {
                 scope.generate();
             });
 
+            //default values
             scope.month = scope.month || moment().startOf('day');
             scope.days = [];
             scope.convertedDaysSelected = scope.convertedDaysSelected || [];
+            scope.weekDaysOff = scope.weekDaysOff || [];
+            scope.daysOff = scope.daysOff || [];
             scope.disableBackButton = false;
             scope.disableNextButton = false;
 
@@ -104,18 +111,18 @@ angular.module('multipleDatePicker', [])
             var momentDaysOfWeek = moment().localeData()._weekdaysMin;
             scope.daysOfWeek = [momentDaysOfWeek[1], momentDaysOfWeek[2], momentDaysOfWeek[3], momentDaysOfWeek[4], momentDaysOfWeek[5], momentDaysOfWeek[6], momentDaysOfWeek[0]];
 
-
-
-            /*When user un/select a date, call the callback with 2 params :
-            *     timestamp : timestamp in ms
-            *     selected : true if date has been selected, false if date has been unselected
+            /*
+            * @deprecated
+            * When user un/select a date, call the callback with 2 params :
+            * timestamp : timestamp in ms
+            * selected : true if date has been selected, false if date has been unselected
             * */
             scope.toggleDay = function(momentDate){
                 if(momentDate.selectable){
                     momentDate.selected = !momentDate.selected;
                     if(momentDate.selected){
                         scope.convertedDaysSelected.push(momentDate);
-                    }else{
+                    } else {
                         _.remove(scope.convertedDaysSelected, function(date){
                             return date.valueOf() === momentDate.valueOf();
                         });
@@ -145,16 +152,16 @@ angular.module('multipleDatePicker', [])
 
             /*Check if the date is off : unselectable*/
             scope.isDayOff = function(scope, date){
-                return _.any(scope.weekDaysOff, function(dayOff){
+                return angular.isArray(scope.weekDaysOff) && scope.weekDaysOff.some(function(dayOff){
                     return date.day() === dayOff;
-                }) || _.any(scope.daysOff, function(dayOff){
+                }) || angular.isArray(scope.daysOff) && scope.daysOff.some(function(dayOff){
                     return date.isSame(dayOff, 'day');
                 });
             };
 
             /*Check if the date is selected*/
             scope.isSelected = function(scope, date){
-                return _.any(scope.convertedDaysSelected, function(d){
+                return scope.convertedDaysSelected.some(function(d){
                     return date.isSame(d, 'day');
                 });
             };
