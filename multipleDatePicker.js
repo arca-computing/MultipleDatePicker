@@ -67,8 +67,8 @@ angular.module('multipleDatePicker', [])
             /*utility functions*/
             var checkNavigationButtons = function(){
                 var today = moment(),
-                    previousMonth = moment(scope.month).subtract('month', 1),
-                    nextMonth = moment(scope.month).add('month', 1);
+                    previousMonth = moment(scope.month).subtract(1, 'month'),
+                    nextMonth = moment(scope.month).add(1, 'month');
                 scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
                 scope.disableNextButton= scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
             };
@@ -101,7 +101,7 @@ angular.module('multipleDatePicker', [])
             scope.disableNextButton = false;
 
             /*To display days of week names in moment.lang*/
-            var momentDaysOfWeek = moment().lang()._weekdaysMin;
+            var momentDaysOfWeek = moment().localeData()._weekdaysMin;
             scope.daysOfWeek = [momentDaysOfWeek[1], momentDaysOfWeek[2], momentDaysOfWeek[3], momentDaysOfWeek[4], momentDaysOfWeek[5], momentDaysOfWeek[6], momentDaysOfWeek[0]];
 
 
@@ -130,7 +130,7 @@ angular.module('multipleDatePicker', [])
             /*Navigate to previous month*/
             scope.previousMonth = function(){
                 if(!scope.disableBackButton){
-                    scope.month = scope.month.subtract('month', 1);
+                    scope.month = scope.month.subtract(1, 'month');
                     scope.generate();
                 }
             };
@@ -138,7 +138,7 @@ angular.module('multipleDatePicker', [])
             /*Navigate to next month*/
             scope.nextMonth = function(){
                 if(!scope.disableNextButton){
-                    scope.month = scope.month.add('month', 1);
+                    scope.month = scope.month.add(1, 'month');
                     scope.generate();
                 }
             };
@@ -174,7 +174,7 @@ angular.module('multipleDatePicker', [])
                 }
 
                 for (var j = 0; j < maxDays; j++) {
-                    var date = moment(previousDay.add('days', 1));
+                    var date = moment(previousDay.add(1, 'days'));
                     date.selectable = !scope.isDayOff(scope, date);
                     date.selected = scope.isSelected(scope, date);
                     date.today = date.isSame(now, 'day');
