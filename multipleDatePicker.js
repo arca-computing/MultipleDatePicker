@@ -21,6 +21,7 @@ angular.module('multipleDatePicker', [])
       * Param timestamp will be the date at midnight
       * */
       callback: '&',
+      dayClick: '=?',
       /*
       * Type: array of milliseconds timestamps
       * Days already selected
@@ -59,7 +60,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay(day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -111,21 +112,37 @@ angular.module('multipleDatePicker', [])
       var momentDaysOfWeek = moment().localeData()._weekdaysMin;
       scope.daysOfWeek = [momentDaysOfWeek[1], momentDaysOfWeek[2], momentDaysOfWeek[3], momentDaysOfWeek[4], momentDaysOfWeek[5], momentDaysOfWeek[6], momentDaysOfWeek[0]];
 
-      /*
-      * @deprecated
-      * When user un/select a date, call the callback with 2 params :
-      * timestamp : timestamp in ms
-      * selected : true if date has been selected, false if date has been unselected
-      * */
-      scope.toggleDay = function(momentDate){
-        if(momentDate.selectable){
+      /**
+       * Called when user clicks a date
+       * @param Event event the click event
+       * @param Moment momentDate a moment object extended with selected and isSelectable booleans 
+       * @see #momentDate
+       * @callback dayClick
+       * @callback callback deprecated
+       */
+      scope.toggleDay = function(event, momentDate){
+        event.preventDefault()
+
+        var prevented = false
+
+        event.preventDefault = function() {
+          prevented = true
+        }
+
+        if(typeof scope.dayClick == 'function') {
+          scope.dayClick(event, momentDate)
+        }
+
+        if(momentDate.selectable && !prevented){
           momentDate.selected = !momentDate.selected;
           if(momentDate.selected){
             scope.convertedDaysSelected.push(momentDate);
           } else {
-            _.remove(scope.convertedDaysSelected, function(date){
+
+            scope.convertedDaysSelected.filter(function(date){
               return date.valueOf() === momentDate.valueOf();
-            });
+            })
+
             momentDate.hover = false;
           }
           if(typeof(scope.callback) === "function"){
