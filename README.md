@@ -5,6 +5,6 @@ MultipleDatePicker is an Angular directive to show a simple calendar allowing us
 
 #Install and demo
 [http://arca-computing.github.io/MultipleDatePicker/](http://arca-computing.github.io/MultipleDatePicker/)
-gi
+
 #What's next ?
 We created this directive to have a simple calendar with multi-dates selection. We will keep it simple but any improvement is welcome.
