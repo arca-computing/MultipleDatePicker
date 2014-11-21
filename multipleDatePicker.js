@@ -166,7 +166,7 @@ angular.module('multipleDatePicker', [])
         };
 
         if(typeof scope.dayHover == 'function') {
-          scope.dayHover(event, day, over);
+          scope.dayHover(event, day);
         }
 
         if(!prevented) {
