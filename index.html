@@ -73,11 +73,34 @@
         <hr>
         <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Add some options</h3>
         <p>You can give option directly in the html.</p>
-        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Callback</h4>
-        <p>The callback will be called everytime a date is un/selected. <strong>Be aware that the date (timestamp) given to the callback is a day at midnight</strong>.</p>
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Click callback</h4>
+        <p>The callback will be called everytime a date is clicked. <strong>Be aware that the date (timestamp) given to the callback is a day at midnight</strong>.</p>
         <p>This exemple shows how to pass a scope function that will prompt an alert with infos.</p>
-        <pre><code>&lt;multiple-date-picker callback="logInfos(timestamp, selected);"/&gt;</code></pre>
-        <div><multiple-date-picker callback="logInfos(timestamp, selected);"/></div>
+        <pre><code>&lt;multiple-date-picker day-click="logInfos"/&gt;</code></pre>
+        <p>The <code>logInfos</code> function will be called with a preventable event and the moment object:</p>
+        <pre><code>
+          $scope.logInfos = function(event, date) {
+            event.preventDefault() // prevent the select to happend
+            console.log(date.valueOf()) //will give you the timestamp
+            //reproduce the standard behavior
+            date.selected = !date.selected
+          }
+        </code></pre>
+        <div><multiple-date-picker day-click="doDate"/></div>
+        <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Hover callback</h4>
+        <pre><code>&lt;multiple-date-picker day-hover="logInfos"/&gt;</code></pre>
+        <p>Same options as before</p>
+        <pre><code>
+          $scope.logInfos = function(event, date) {
+            event.preventDefault() // prevent the date.hover to be toggled
+            console.log(date.valueOf()) //will give you the timestamp
+            if(event.type == 'mouseover') {
+              //we're on it!
+            }
+          }
+        </code></pre>
+        <div><multiple-date-picker day-hover="doDate"/></div>
+        <small>This will be showed to the web console</small>
         <hr>
 
         <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Days-off</h4>
@@ -116,8 +139,8 @@
 
         <h4><a class="anchor"><span class="octicon octicon-link"></span></a>Let's get serious</h4>
         <p>You can (of course) use all options at the same time.</p>
-        <pre><code>&lt;multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/&gt;</code></pre>
-        <div><multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" callback="logInfos(timestamp, selected);"/></div>
+        <pre><code>&lt;multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" day-click="logInfos"/&gt;</code></pre>
+        <div><multiple-date-picker days-off="oneDayOff" days-selected="selectedDays" week-days-off="[0]" day-click="doDate"/></div>
         <hr>
 
         <h3><a class="anchor"><span class="octicon octicon-link"></span></a>Dependencies</h3>
