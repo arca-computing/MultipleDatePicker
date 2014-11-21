@@ -1,8 +1,8 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
-Version 1.1.0
-[https://github.com/soyuka](Soyuka) improved the library, you now have events in your callback, so you can play with it. He also add a new callback when you over a day. Check out the demo page !
+###Version 1.1.0
+[Soyuka](https://github.com/soyuka) improved the library, you now have events in your callback, so you can play with it. He also add a new callback when you over a day. Check out the demo page !
 
 #What is MultipleDatePicker ?
 MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates, a callback is called, you can specify some off days or already selected days.
