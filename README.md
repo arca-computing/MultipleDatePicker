@@ -4,6 +4,8 @@
 ###Version 1.1.0
 [Soyuka](https://github.com/soyuka) improved the library, you now have events in your callback, so you can play with it. He also add a new callback when you over a day. Check out the demo page !
 
+The parameter "callback" has been deprecated, it's still working but will be removed in a next version, please update.
+
 #What is MultipleDatePicker ?
 MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates, a callback is called, you can specify some off days or already selected days.
 
