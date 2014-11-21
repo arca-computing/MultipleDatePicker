@@ -67,15 +67,15 @@
 }
 
 .picker-day.today,
-.picker-day.today.hover,
+.picker-day.today:hover,
 .picker-day.today.picker-selected,
 .picker-day.today.picker-off,
-.picker-day.today.picker-off.hover {
+.picker-day.today.picker-off:hover {
   color: #00a3ff;
   font-weight: 700;
 }
 
-.picker-day.hover {
+.picker-day:not(.picker-off):not(.picker-empty):hover {
   background-color: #c6000b;
   color: #fff;
   cursor: pointer;
@@ -87,14 +87,14 @@
 }
 
 .picker-day.picker-off,
-.picker-day.picker-off.hover {
+.picker-day.picker-off:hover {
   background-color: #eee;
   color: #bbb;
   cursor: default;
 }
 
 .picker-day.picker-empty,
-.picker-day.picker-empty.hover {
+.picker-day.picker-empty:hover {
   background-color: #fafafa;
   cursor: default;
 }
