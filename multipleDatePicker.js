@@ -22,6 +22,7 @@ angular.module('multipleDatePicker', [])
       * */
       callback: '&',
       dayClick: '=?',
+      dayHover: '=?',
       /*
       * Type: array of milliseconds timestamps
       * Days already selected
@@ -60,7 +61,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="day.hover=true" ng-mouseleave="day.hover=false" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'hover\':day.hover && day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day, true)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -81,7 +82,7 @@ angular.module('multipleDatePicker', [])
           var momentDates = [];
           newValue.map(function(timestamp){
             momentDates.push(moment(timestamp));
-          })
+          });
           scope.convertedDaysSelected = momentDates;
           scope.generate();
         }
@@ -121,16 +122,16 @@ angular.module('multipleDatePicker', [])
        * @callback callback deprecated
        */
       scope.toggleDay = function(event, momentDate){
-        event.preventDefault()
+        event.preventDefault();
 
-        var prevented = false
+        var prevented = false;
 
         event.preventDefault = function() {
-          prevented = true
-        }
+          prevented = true;
+        };
 
         if(typeof scope.dayClick == 'function') {
-          scope.dayClick(event, momentDate)
+          scope.dayClick(event, momentDate);
         }
 
         if(momentDate.selectable && !prevented){
@@ -141,13 +142,36 @@ angular.module('multipleDatePicker', [])
 
             scope.convertedDaysSelected.filter(function(date){
               return date.valueOf() === momentDate.valueOf();
-            })
+            });
 
             momentDate.hover = false;
           }
           if(typeof(scope.callback) === "function"){
             scope.callback({timestamp:momentDate.valueOf(), selected:momentDate.selected});
           }
+        }
+      };
+
+      /**
+       * Hover day
+       * @param Event event
+       * @param Moment day
+       * @param bool over true on mouseover, false on mouseleave
+       */
+      scope.hoverDay = function(event, day, over) {
+        event.preventDefault();
+        var prevented = false;
+
+        event.preventDefault = function() {
+          prevented = true ;
+        };
+
+        if(typeof scope.dayHover == 'function') {
+          scope.dayHover(event, day, over);
+        }
+
+        if(!prevented) {
+          day.hover = over === true ? true : false;
         }
       };
 
