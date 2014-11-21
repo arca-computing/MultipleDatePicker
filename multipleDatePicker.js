@@ -10,7 +10,7 @@
           Feel free to edit and share this piece of code, our idea is to keep simple ;)
  */
 angular.module('multipleDatePicker', [])
-  .directive('multipleDatePicker', [function(){
+  .directive('multipleDatePicker', ['$log', function($log){
   "use strict";
   return {
     restrict: 'AE',
@@ -61,7 +61,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day, true)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -136,17 +136,17 @@ angular.module('multipleDatePicker', [])
 
         if(momentDate.selectable && !prevented){
           momentDate.selected = !momentDate.selected;
-          if(momentDate.selected){
+
+          if(momentDate.selected) {
             scope.convertedDaysSelected.push(momentDate);
           } else {
-
-            scope.convertedDaysSelected.filter(function(date){
+            scope.convertedDaysSelected.filter(function(date) {
               return date.valueOf() === momentDate.valueOf();
             });
-
-            momentDate.hover = false;
           }
+
           if(typeof(scope.callback) === "function"){
+            $log.warn('callback option deprecated, please use dayClick');
             scope.callback({timestamp:momentDate.valueOf(), selected:momentDate.selected});
           }
         }
@@ -156,9 +156,8 @@ angular.module('multipleDatePicker', [])
        * Hover day
        * @param Event event
        * @param Moment day
-       * @param bool over true on mouseover, false on mouseleave
        */
-      scope.hoverDay = function(event, day, over) {
+      scope.hoverDay = function(event, day) {
         event.preventDefault();
         var prevented = false;
 
@@ -171,7 +170,7 @@ angular.module('multipleDatePicker', [])
         }
 
         if(!prevented) {
-          day.hover = over === true ? true : false;
+          day.hover = event.type === 'mouseover' ? true : false;
         }
       };
 
