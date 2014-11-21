@@ -88,10 +88,6 @@ angular.module('multipleDatePicker', [])
         }
       });
 
-      scope.$watch('callback', function() {
-        scope.generate();
-      });
-
       scope.$watch('weekDaysOff', function() {
         scope.generate();
       });
