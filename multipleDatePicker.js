@@ -86,15 +86,15 @@ angular.module('multipleDatePicker', [])
           scope.convertedDaysSelected = momentDates;
           scope.generate();
         }
-      });
+      }, true);
 
       scope.$watch('weekDaysOff', function() {
         scope.generate();
-      });
+      }, true);
 
       scope.$watch('daysOff', function() {
         scope.generate();
-      });
+      }, true);
 
       //default values
       scope.month = scope.month || moment().startOf('day');
