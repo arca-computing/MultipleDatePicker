@@ -1,7 +1,7 @@
 /*
   Creator: Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
   Date: July 2014
-  Version: 1.1.1
+  Version: 1.1.3
 
   Description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
           A callback is called everytime a de/selection is done.
@@ -23,6 +23,12 @@ angular.module('multipleDatePicker', [])
       callback: '&',
       dayClick: '=?',
       dayHover: '=?',
+      /*
+      * Type: function(newMonth, oldMonth)
+      * Will be called when month changed
+      * Param newMonth/oldMonth will be the first day of month at midnight
+      * */
+      monthChanged: '=?',
       /*
       * Type: array of milliseconds timestamps
       * Days already selected
@@ -173,7 +179,11 @@ angular.module('multipleDatePicker', [])
       /*Navigate to previous month*/
       scope.previousMonth = function(){
         if(!scope.disableBackButton){
+          var oldMonth = moment(scope.month);
           scope.month = scope.month.subtract(1, 'month');
+          if(typeof scope.monthChanged == 'function') {
+            scope.monthChanged(scope.month, oldMonth);
+          }
           scope.generate();
         }
       };
@@ -181,7 +191,11 @@ angular.module('multipleDatePicker', [])
       /*Navigate to next month*/
       scope.nextMonth = function(){
         if(!scope.disableNextButton){
+          var oldMonth = moment(scope.month);
           scope.month = scope.month.add(1, 'month');
+          if(typeof scope.monthChanged == 'function') {
+            scope.monthChanged(scope.month, oldMonth);
+          }
           scope.generate();
         }
       };
