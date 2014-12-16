@@ -63,9 +63,9 @@ angular.module('multipleDatePicker', [])
     },
     template: '<div class="multiple-date-picker">'+
             '<div class="picker-top-row">'+
-              '<div class="text-center picker-navigate" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>'+
+              '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>'+
               '<div class="text-center picker-month">{{month.format(\'MMMM YYYY\')}}</div>'+
-              '<div class="text-center picker-navigate" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>'+
+              '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>'+
             '</div>'+
             '<div class="picker-days-week-row">'+
               '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>'+
