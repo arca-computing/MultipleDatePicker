@@ -46,6 +46,11 @@ angular.module('multipleDatePicker', [])
       * */
       daysOff: '=?',
       /*
+      * Type: boolean
+      * Sunday be the first day of week, default will be Monday
+      * */
+      sundayFirstDay: '=?',
+      /*
        * Type: boolean
        * if true can't go back in months before today's month
        * */
@@ -80,6 +85,23 @@ angular.module('multipleDatePicker', [])
           nextMonth = moment(scope.month).add(1, 'month');
         scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
         scope.disableNextButton= scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
+      },
+      getDaysOfWeek = function(){
+        /*To display days of week names in moment.lang*/
+        var momentDaysOfWeek = moment().localeData()._weekdaysMin,
+          days = [];
+        
+        for(var i = 1; i < 7; i++){
+          days.push(momentDaysOfWeek[i]);
+        }
+
+        if(scope.sundayFirstDay){
+          days.splice(0, 0, momentDaysOfWeek[0]);
+        }else{
+          days.push(momentDaysOfWeek[0]);
+        }
+        
+        return days;
       };
 
       /*scope functions*/
@@ -109,11 +131,8 @@ angular.module('multipleDatePicker', [])
       scope.weekDaysOff = scope.weekDaysOff || [];
       scope.daysOff = scope.daysOff || [];
       scope.disableBackButton = false;
-      scope.disableNextButton = false;
-
-      /*To display days of week names in moment.lang*/
-      var momentDaysOfWeek = moment().localeData()._weekdaysMin;
-      scope.daysOfWeek = [momentDaysOfWeek[1], momentDaysOfWeek[2], momentDaysOfWeek[3], momentDaysOfWeek[4], momentDaysOfWeek[5], momentDaysOfWeek[6], momentDaysOfWeek[0]];
+      scope.disableNextButton = false;      
+      scope.daysOfWeek = getDaysOfWeek();
 
       /**
        * Called when user clicks a date
@@ -226,7 +245,14 @@ angular.module('multipleDatePicker', [])
           maxDays = lastDayOfMonth.date();
 
         scope.emptyFirstDays = [];
-        for (var i = firstDayOfMonth.day() === 0 ? 6 : firstDayOfMonth.day() - 1; i > 0; i--) {
+
+        var emptyFirstDaysStartIndex;
+        if(firstDayOfMonth.day() === 0){
+          emptyFirstDaysStartIndex = scope.sundayFirstDay ? 0 : 6;
+        }else{
+          emptyFirstDaysStartIndex = firstDayOfMonth.day() - (scope.sundayFirstDay ? 0 : 1);
+        }
+        for (var i = emptyFirstDaysStartIndex; i > 0; i--) {
           scope.emptyFirstDays.push({});
         }
 
@@ -239,7 +265,13 @@ angular.module('multipleDatePicker', [])
         }
 
         scope.emptyLastDays = [];
-        for (var k = 7 - (lastDayOfMonth.day() === 0 ? 7 : lastDayOfMonth.day()); k > 0; k--) {
+        var emptyLastDaysStartIndex = scope.sundayFirstDay ? 6 : 7;
+        if(lastDayOfMonth.day() === 0 && !scope.sundayFirstDay){
+          emptyLastDaysStartIndex = 0;
+        }else{
+          emptyLastDaysStartIndex -= lastDayOfMonth.day();          
+        }
+        for (var k = emptyLastDaysStartIndex; k > 0; k--) {
           scope.emptyLastDays.push({});
         }
         scope.days = days;
