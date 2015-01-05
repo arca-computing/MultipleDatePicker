@@ -1,7 +1,7 @@
 /*
   Creator: Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
   Date: July 2014
-  Version: 1.1.4
+  Version: 1.1.5
 
   Description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
           A callback is called everytime a de/selection is done.
@@ -45,6 +45,11 @@ angular.module('multipleDatePicker', [])
       * Days not selectables
       * */
       daysOff: '=?',
+      /*
+      * Type: boolean
+      * Set all days off
+      * */
+      allDaysOff: '=?',
       /*
       * Type: boolean
       * Sunday be the first day of week, default will be Monday
@@ -121,6 +126,10 @@ angular.module('multipleDatePicker', [])
       }, true);
 
       scope.$watch('daysOff', function() {
+        scope.generate();
+      }, true);
+
+      scope.$watch('allDaysOff', function() {
         scope.generate();
       }, true);
 
@@ -221,11 +230,13 @@ angular.module('multipleDatePicker', [])
 
       /*Check if the date is off : unselectable*/
       scope.isDayOff = function(scope, date){
-        return angular.isArray(scope.weekDaysOff) && scope.weekDaysOff.some(function(dayOff){
-          return date.day() === dayOff;
-        }) || angular.isArray(scope.daysOff) && scope.daysOff.some(function(dayOff){
-          return date.isSame(dayOff, 'day');
-        });
+        return scope.allDaysOff ||
+          (angular.isArray(scope.weekDaysOff) && scope.weekDaysOff.some(function(dayOff){
+            return date.day() === dayOff;
+          })) || 
+          (angular.isArray(scope.daysOff) && scope.daysOff.some(function(dayOff){
+            return date.isSame(dayOff, 'day');
+          }));
       };
 
       /*Check if the date is selected*/
