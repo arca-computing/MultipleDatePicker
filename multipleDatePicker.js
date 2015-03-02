@@ -64,7 +64,12 @@ angular.module('multipleDatePicker', [])
        * Type: boolean
        * if true can't go in futur months after today's month
        * */
-      disallowGoFuturMonths: '='
+      disallowGoFuturMonths: '=',
+      /*
+       * Type: integer
+       * it indicates which month [ 0-> jan, 1-> feb, ..., 11 -> dec] will be displayed
+       */
+      displayMonth: '=?'
     },
     template: '<div class="multiple-date-picker">'+
             '<div class="picker-top-row">'+
@@ -95,7 +100,7 @@ angular.module('multipleDatePicker', [])
         /*To display days of week names in moment.lang*/
         var momentDaysOfWeek = moment().localeData()._weekdaysMin,
           days = [];
-        
+
         for(var i = 1; i < 7; i++){
           days.push(momentDaysOfWeek[i]);
         }
@@ -105,7 +110,7 @@ angular.module('multipleDatePicker', [])
         }else{
           days.push(momentDaysOfWeek[0]);
         }
-        
+
         return days;
       };
 
@@ -134,13 +139,23 @@ angular.module('multipleDatePicker', [])
       }, true);
 
       //default values
-      scope.month = scope.month || moment().startOf('day');
+
+      if (scope.displayMonth == undefined)
+      {
+        scope.month = scope.month || moment().startOf('day');
+      }
+      else
+      {
+        var dateMonth = moment().startOf('day').toDate();
+        dateMonth.setMonth( scope.displayMonth );
+        scope.month = moment(dateMonth);
+      }
       scope.days = [];
       scope.convertedDaysSelected = scope.convertedDaysSelected || [];
       scope.weekDaysOff = scope.weekDaysOff || [];
       scope.daysOff = scope.daysOff || [];
       scope.disableBackButton = false;
-      scope.disableNextButton = false;      
+      scope.disableNextButton = false;
       scope.daysOfWeek = getDaysOfWeek();
 
       /**
