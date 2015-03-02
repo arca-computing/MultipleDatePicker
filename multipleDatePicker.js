@@ -82,7 +82,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day {{day.style}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -118,8 +118,18 @@ angular.module('multipleDatePicker', [])
       scope.$watch('daysSelected', function(newValue) {
         if(newValue){
           var momentDates = [];
-          newValue.map(function(timestamp){
-            momentDates.push(moment(timestamp));
+          newValue.map(function(selectedDate){
+            var dateObj;
+            if (typeof(selectedDate) === 'object')
+            {
+              dateObj = moment( selectedDate.date);
+              dateObj.style = selectedDate.style || '';
+            }
+            else
+            {
+              dateObj = moment(selectedDate);
+            }
+            momentDates.push(dateObj);
           });
           scope.convertedDaysSelected = momentDates;
           scope.generate();
@@ -261,6 +271,19 @@ angular.module('multipleDatePicker', [])
         });
       };
 
+      scope.getClass = function(scope, date){
+        var dateClass = '';
+        for (var index in scope.convertedDaysSelected )
+        {
+          var d = scope.convertedDaysSelected[index];
+          if (date.isSame(d, 'day'))
+          {
+            dateClass = d.style;
+          }
+        }
+        return dateClass;
+      };
+
       /*Generate the calendar*/
       scope.generate = function(){
         var previousDay = moment(scope.month).date(0),
@@ -286,6 +309,10 @@ angular.module('multipleDatePicker', [])
           var date = moment(previousDay.add(1, 'days'));
           date.selectable = !scope.isDayOff(scope, date);
           date.selected = scope.isSelected(scope, date);
+          if (date.selected)
+          {
+            date.style = scope.getClass(scope, date);
+          }
           date.today = date.isSame(now, 'day');
           days.push(date);
         }
