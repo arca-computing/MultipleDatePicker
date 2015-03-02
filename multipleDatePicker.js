@@ -140,7 +140,7 @@ angular.module('multipleDatePicker', [])
 
       //default values
 
-      if (scope.displayMonth == undefined)
+      if (scope.displayMonth === undefined)
       {
         scope.month = scope.month || moment().startOf('day');
       }
