@@ -64,7 +64,12 @@ angular.module('multipleDatePicker', [])
        * Type: boolean
        * if true can't go in futur months after today's month
        * */
-      disallowGoFuturMonths: '='
+      disallowGoFuturMonths: '=',
+      /*
+       * Type: integer
+       * it indicates which month [ 0-> jan, 1-> feb, ..., 11 -> dec] will be displayed
+       */
+      displayMonth: '=?'
     },
     template: '<div class="multiple-date-picker">'+
             '<div class="picker-top-row">'+
@@ -77,7 +82,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day {{day.style}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -88,14 +93,14 @@ angular.module('multipleDatePicker', [])
         var today = moment(),
           previousMonth = moment(scope.month).subtract(1, 'month'),
           nextMonth = moment(scope.month).add(1, 'month');
-        scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
-        scope.disableNextButton= scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
+        scope.disableBackButton = scope.disallowBackPastMonths;
+        scope.disableNextButton= scope.disallowGoFuturMonths;
       },
       getDaysOfWeek = function(){
         /*To display days of week names in moment.lang*/
         var momentDaysOfWeek = moment().localeData()._weekdaysMin,
           days = [];
-        
+
         for(var i = 1; i < 7; i++){
           days.push(momentDaysOfWeek[i]);
         }
@@ -105,7 +110,7 @@ angular.module('multipleDatePicker', [])
         }else{
           days.push(momentDaysOfWeek[0]);
         }
-        
+
         return days;
       };
 
@@ -113,8 +118,18 @@ angular.module('multipleDatePicker', [])
       scope.$watch('daysSelected', function(newValue) {
         if(newValue){
           var momentDates = [];
-          newValue.map(function(timestamp){
-            momentDates.push(moment(timestamp));
+          newValue.map(function(selectedDate){
+            var dateObj;
+            if (typeof(selectedDate) === 'object')
+            {
+              dateObj = moment( selectedDate.date);
+              dateObj.style = selectedDate.style || '';
+            }
+            else
+            {
+              dateObj = moment(selectedDate);
+            }
+            momentDates.push(dateObj);
           });
           scope.convertedDaysSelected = momentDates;
           scope.generate();
@@ -134,13 +149,23 @@ angular.module('multipleDatePicker', [])
       }, true);
 
       //default values
-      scope.month = scope.month || moment().startOf('day');
+
+      if (scope.displayMonth === undefined)
+      {
+        scope.month = scope.month || moment().startOf('day');
+      }
+      else
+      {
+        var dateMonth = moment().startOf('day').toDate();
+        dateMonth.setMonth( scope.displayMonth );
+        scope.month = moment(dateMonth);
+      }
       scope.days = [];
       scope.convertedDaysSelected = scope.convertedDaysSelected || [];
       scope.weekDaysOff = scope.weekDaysOff || [];
       scope.daysOff = scope.daysOff || [];
       scope.disableBackButton = false;
-      scope.disableNextButton = false;      
+      scope.disableNextButton = false;
       scope.daysOfWeek = getDaysOfWeek();
 
       /**
@@ -246,6 +271,19 @@ angular.module('multipleDatePicker', [])
         });
       };
 
+      scope.getClass = function(scope, date){
+        var dateClass = '';
+        for (var index in scope.convertedDaysSelected )
+        {
+          var d = scope.convertedDaysSelected[index];
+          if (date.isSame(d, 'day'))
+          {
+            dateClass = d.style;
+          }
+        }
+        return dateClass;
+      };
+
       /*Generate the calendar*/
       scope.generate = function(){
         var previousDay = moment(scope.month).date(0),
@@ -271,6 +309,10 @@ angular.module('multipleDatePicker', [])
           var date = moment(previousDay.add(1, 'days'));
           date.selectable = !scope.isDayOff(scope, date);
           date.selected = scope.isSelected(scope, date);
+          if (date.selected)
+          {
+            date.style = scope.getClass(scope, date);
+          }
           date.today = date.isSame(now, 'day');
           days.push(date);
         }
