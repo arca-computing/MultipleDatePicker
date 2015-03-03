@@ -113,8 +113,8 @@ angular.module('multipleDatePicker', [])
           nextMonth = moment(scope.month).add(1, 'month');
         scope.disableBackButton = scope.disallowBackPastMonths;
         scope.disableNextButton= scope.disallowGoFuturMonths;
-      },
-      getDaysOfWeek = function(){
+      };
+      scope.getDaysOfWeek = function(){
         /*To display days of week names in moment.lang*/
         var momentDaysOfWeek = moment().locale( scope.displayLocale || '').localeData()._weekdaysMin,
           days = [];
@@ -189,12 +189,12 @@ angular.module('multipleDatePicker', [])
       scope.daysOff = scope.daysOff || [];
       scope.disableBackButton = false;
       scope.disableNextButton = false;
-      scope.daysOfWeek = getDaysOfWeek();
+      scope.daysOfWeek = scope.getDaysOfWeek();
 
       /**
        * Called when user clicks a date
        * @param Event event the click event
-       * @param Moment momentDate a moment object extended with selected and isSelectable booleans 
+       * @param Moment momentDate a moment object extended with selected and isSelectable booleans
        * @see #momentDate
        * @callback dayClick
        * @callback callback deprecated
