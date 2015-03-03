@@ -69,7 +69,12 @@ angular.module('multipleDatePicker', [])
        * Type: integer
        * it indicates which month [ 0-> jan, 1-> feb, ..., 11 -> dec] will be displayed
        */
-      displayMonth: '=?'
+      displayMonth: '=?',
+      /*
+       * Type: string
+       *
+       */
+      displayLocale: '=?'
     },
     template: '<div class="multiple-date-picker">'+
             '<div class="picker-top-row">'+
@@ -171,6 +176,11 @@ angular.module('multipleDatePicker', [])
         dateMonth.setMonth( scope.displayMonth );
         scope.month = moment(dateMonth);
       }
+      if (scope.displayLocale !== undefined )
+      {
+        scope.month.locale( scope.displayLocale.toLowerCase());
+      }
+
       scope.days = [];
       scope.convertedDaysSelected = scope.convertedDaysSelected || [];
       scope.weekDaysOff = scope.weekDaysOff || [];
