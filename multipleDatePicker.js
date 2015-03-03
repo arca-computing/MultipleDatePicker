@@ -74,7 +74,7 @@ angular.module('multipleDatePicker', [])
     template: '<div class="multiple-date-picker">'+
             '<div class="picker-top-row">'+
               '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>'+
-              '<div class="text-center picker-month">{{month.format(\'MMMM YYYY\')}}</div>'+
+              '<div class="text-center picker-month">{{capitalizeFirstLetter(month.format(\'MMMM YYYY\'))}}</div>'+
               '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>'+
             '</div>'+
             '<div class="picker-days-week-row">'+
@@ -86,6 +86,17 @@ angular.module('multipleDatePicker', [])
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
+    controller: function($scope, $element)
+    {
+      $scope.$on('languageChanged', function(event, lang){
+        $scope.month = $scope.month.locale( lang.toLowerCase() );
+      });
+
+      $scope.capitalizeFirstLetter= function(text){
+        return text.charAt(0).toUpperCase() + text.slice(1);
+      };
+
+    },
     link: function(scope){
 
       /*utility functions*/
