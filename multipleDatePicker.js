@@ -93,8 +93,8 @@ angular.module('multipleDatePicker', [])
         var today = moment(),
           previousMonth = moment(scope.month).subtract(1, 'month'),
           nextMonth = moment(scope.month).add(1, 'month');
-        scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
-        scope.disableNextButton= scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
+        scope.disableBackButton = scope.disallowBackPastMonths;
+        scope.disableNextButton= scope.disallowGoFuturMonths;
       },
       getDaysOfWeek = function(){
         /*To display days of week names in moment.lang*/
