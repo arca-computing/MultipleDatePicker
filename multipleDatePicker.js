@@ -94,7 +94,9 @@ angular.module('multipleDatePicker', [])
     controller: function($scope, $element)
     {
       $scope.$on('languageChanged', function(event, lang){
-        $scope.month = $scope.month.locale( lang.toLowerCase() );
+        $scope.displayLocale = lang.toLowerCase();
+        $scope.month = $scope.month.locale( $scope.displayLocale );
+        $scope.daysOfWeek = $scope.getDaysOfWeek();
       });
 
       $scope.capitalizeFirstLetter= function(text){
@@ -114,7 +116,7 @@ angular.module('multipleDatePicker', [])
       },
       getDaysOfWeek = function(){
         /*To display days of week names in moment.lang*/
-        var momentDaysOfWeek = moment().localeData()._weekdaysMin,
+        var momentDaysOfWeek = moment().locale( scope.displayLocale || '').localeData()._weekdaysMin,
           days = [];
 
         for(var i = 1; i < 7; i++){
