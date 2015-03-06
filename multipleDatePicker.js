@@ -87,7 +87,7 @@ angular.module('multipleDatePicker', [])
             '</div>'+
             '<div class="picker-days-row">'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyFirstDays">&nbsp;</div>'+
-              '<div class="text-center picker-day {{day.style}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
+              '<div class="text-center picker-day {{day.styles.join(\' \')}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today}">{{day ? day.format(\'D\') : \'\'}}</div>'+
               '<div class="text-center picker-day picker-empty" ng-repeat="x in emptyLastDays">&nbsp;</div>'+
             '</div>'+
           '</div>',
@@ -141,7 +141,7 @@ angular.module('multipleDatePicker', [])
             if (typeof(selectedDate) === 'object')
             {
               dateObj = moment( selectedDate.date);
-              dateObj.style = selectedDate.style || '';
+              dateObj.styles = selectedDate.styles || [];
             }
             else
             {
@@ -294,17 +294,17 @@ angular.module('multipleDatePicker', [])
         });
       };
 
-      scope.getClass = function(scope, date){
-        var dateClass = '';
+      scope.getClasses = function(scope, date){
+        var dateClasses = '';
         for (var index in scope.convertedDaysSelected )
         {
           var d = scope.convertedDaysSelected[index];
           if (date.isSame(d, 'day'))
           {
-            dateClass = d.style;
+            dateClasses = d.styles;
           }
         }
-        return dateClass;
+        return dateClasses;
       };
 
       /*Generate the calendar*/
@@ -334,7 +334,7 @@ angular.module('multipleDatePicker', [])
           date.selected = scope.isSelected(scope, date);
           if (date.selected)
           {
-            date.style = scope.getClass(scope, date);
+            date.styles = scope.getClasses(scope, date);
           }
           date.today = date.isSame(now, 'day');
           days.push(date);
