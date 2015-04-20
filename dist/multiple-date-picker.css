@@ -16,7 +16,7 @@
   width: 100%;
 }
 
-.picker-top-row>div {
+.picker-top-row > div {
   display: inline-block;
 }
 
@@ -38,17 +38,17 @@
   width: 66.66%;
 }
 
-.picker-days-week-row>div {
+.picker-days-week-row > div {
   width: 14.28%;
   display: inline-block;
 }
 
-.picker-days-row>div {
+.picker-days-row > div {
   width: 14.28%;
   display: inline-block;
 }
 
-.picker-days-row>div {
+.picker-days-row > div {
   width: 14.28%;
   display: inline-block;
 }
@@ -59,11 +59,11 @@
 }
 
 .picker-day {
-  background-color: #fff;
-  border: 1px solid #eee;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #000;
+  color: #000000;
 }
 
 .picker-day.today,
@@ -72,24 +72,24 @@
 .picker-day.today.picker-off,
 .picker-day.today.picker-off:hover {
   color: #00a3ff;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .picker-day:not(.picker-off):not(.picker-empty):hover {
   background-color: #c6000b;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 }
 
 .picker-day.picker-selected {
   background-color: #c6000b;
-  color: #fff;
+  color: #ffffff;
 }
 
 .picker-day.picker-off,
 .picker-day.picker-off:hover {
-  background-color: #eee;
-  color: #bbb;
+  background-color: #eeeeee;
+  color: #bbbbbb;
   cursor: default;
 }
 
