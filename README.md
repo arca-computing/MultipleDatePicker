@@ -1,6 +1,12 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
+###Version 1.1.6
+Fixed an unselection problem
+
+###Version 1.1.X
+Some bugs fix and improvements, check demo
+
 ###Version 1.1.0
 [Soyuka](https://github.com/soyuka) improved the library, you now have events in your callback, so you can play with it. He also add a new callback when you over a day. Check out the demo page !
 
