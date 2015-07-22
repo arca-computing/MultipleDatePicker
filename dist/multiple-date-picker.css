@@ -16,7 +16,7 @@
   width: 100%;
 }
 
-.picker-top-row>div {
+.picker-top-row > div {
   display: inline-block;
 }
 
@@ -38,63 +38,68 @@
   width: 66.66%;
 }
 
-.picker-days-week-row>div {
+.picker-days-week-row > div {
   width: 14.28%;
   display: inline-block;
 }
 
-.picker-days-row>div {
+.picker-days-row > div {
   width: 14.28%;
   display: inline-block;
 }
 
-.picker-days-row>div {
+.picker-days-row > div {
   width: 14.28%;
+  display: inline-block;
+}
+
+.picker-months-row>div {
+  width: 25%;
   display: inline-block;
 }
 
 .picker-top-row,
-.picker-day {
+.picker-date {
   padding: 10px 0;
 }
 
-.picker-day {
-  background-color: #fff;
-  border: 1px solid #eee;
+.picker-date {
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #000;
+  color: #000000;
 }
 
-.picker-day.today,
-.picker-day.today:hover,
-.picker-day.today.picker-selected,
-.picker-day.today.picker-off,
-.picker-day.today.picker-off:hover {
+.picker-date.today,
+.picker-date.today:hover,
+.picker-date.today.picker-selected,
+.picker-date.today.picker-off,
+.picker-date.today.picker-off:hover {
   color: #00a3ff;
-  font-weight: 700;
+  font-weight: bold;
 }
 
-.picker-day:not(.picker-off):not(.picker-empty):hover {
+.picker-date:not(.picker-off):not(.picker-empty):hover {
   background-color: #c6000b;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 }
 
-.picker-day.picker-selected {
+.picker-date.picker-selected {
   background-color: #c6000b;
-  color: #fff;
+  color: #ffffff;
 }
 
-.picker-day.picker-off,
-.picker-day.picker-off:hover {
-  background-color: #eee;
-  color: #bbb;
+.picker-date.picker-off,
+.picker-date.picker-off:hover {
+  background-color: #eeeeee;
+  color: #bbbbbb;
   cursor: default;
 }
 
-.picker-day.picker-empty,
-.picker-day.picker-empty:hover {
+.picker-date.picker-empty,
+.picker-date.picker-empty:hover {
   background-color: #fafafa;
   cursor: default;
 }
