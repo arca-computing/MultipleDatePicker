@@ -87,8 +87,8 @@ angular.module('multipleDatePicker', [])
             '<div class="picker-top-row">' +
               '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="previous()">&lt;</div>' +
               //'<div class="text-center picker-month">{{month.format(\'MMMM YYYY\')}}</div>' +
-        '<div class="text-center picker-month" ng-if="calendarMode==\'Month\'">{{month.format(topRowDateFormat)}}</div>'+
-        '<div class="text-center picker-month" ng-if="calendarMode==\'Year\'">{{year.format(topRowDateFormat)}}</div>'+
+              '<div class="text-center picker-month" ng-if="calendarMode==\'Month\'">{{month.format(topRowDateFormat)}}</div>'+
+              '<div class="text-center picker-month" ng-if="calendarMode==\'Year\'">{{year.format(topRowDateFormat)}}</div>'+
               '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="next()">&gt;</div>' +
             '</div>' +
             '<div class="picker-days-week-row" ng-if="calendarMode==\'Month\'">' +
@@ -172,8 +172,8 @@ angular.module('multipleDatePicker', [])
                 scope.disableBackButton = false;
                 scope.disableNextButton = false;
                 scope.daysOfWeek = getDaysOfWeek();
-        scope.calendarMode = (attr.calendarMode)?attr.calendarMode : 'Month';
-        scope.topRowDateFormat = (scope.calendarMode=='Month')? 'MMMM YYYY' : 'YYYY';
+                scope.calendarMode = (attr.calendarMode)?attr.calendarMode : 'Month';
+                scope.topRowDateFormat = (scope.calendarMode=='Month')? 'MMMM YYYY' : 'YYYY';
 
                 /**
                  * Called when user clicks a date
@@ -354,11 +354,11 @@ angular.module('multipleDatePicker', [])
                       }
                       scope.days = days;
                   }
-          else if(scope.calendarMode=='Year'){
-            var months = [];
-            var monthsOfYear = moment().locale( scope.displayLocale || '').localeData()._monthsShort;
-            for (var l = 0; l < monthsOfYear.length; ++l){
-              var date = moment('1 ' + monthsOfYear[l]+' '+scope.year.year());
+                  else if(scope.calendarMode=='Year'){
+                    var months = [];
+                    var monthsOfYear = moment().locale( scope.displayLocale || '').localeData()._monthsShort;
+                    for (var l = 0; l < monthsOfYear.length; ++l){
+                      var date = moment('1 ' + monthsOfYear[l]+' '+scope.year.year());
                           if(angular.isArray(scope.highlightDays)){
                               var hlDay = scope.highlightDays.filter(function(d){
                                   return date.isSame(d.date, 'month');
@@ -369,11 +369,11 @@ angular.module('multipleDatePicker', [])
                           date.selectable = !scope.isDayOff(scope, date);
                           date.selected = scope.isSelected(scope, date);
                           date.today = date.isSame(now, 'day');
-              months.push(date);
-            }
-            scope.months = months;
-            checkNavigationButtons();
-          }
+                      months.push(date);
+                    }
+                    scope.months = months;
+                    checkNavigationButtons();
+                  }
                     checkNavigationButtons();
                 };
 
