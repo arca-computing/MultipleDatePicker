@@ -212,7 +212,6 @@ angular.module('multipleDatePicker', [])
                             scope.callback({timestamp: momentDate.valueOf(), selected: momentDate.selected});
                         }
                     }
-                    console.log(scope.convertedDaysSelected);
                 };
 
                 /**
