@@ -1,17 +1,17 @@
 @border-color: #eee;
 
-@empty-day-background: #fafafa;
+@empty-date-background: #fafafa;
 
-@picker-day-today: #00a3ff;
+@picker-date-today: #00a3ff;
 
-@non-pickable-day-background: #eee;
-@non-pickable-day-color: #bbb;
+@non-pickable-date-background: #eee;
+@non-pickable-date-color: #bbb;
 
-@pickable-day-non-picked-background: #fff;
-@pickable-day-non-picked-color: #000;
+@pickable-date-non-picked-background: #fff;
+@pickable-date-non-picked-color: #000;
 
-@pickable-day-picked-background: #C6000B;
-@pickable-day-picked-color: #fff;
+@pickable-date-picked-background: #C6000B;
+@pickable-date-picked-color: #fff;
 
 .text-center{
   text-align: center;
@@ -60,40 +60,45 @@
   display: inline-block;
 }
 
-.picker-top-row, .picker-day{
+.picker-months-row>div {
+  width: 25%;
+  display: inline-block;
+}
+
+.picker-top-row, .picker-date{
   padding: 10px 0;
 }
 
-.picker-day{
-  background-color: @pickable-day-non-picked-background;
+.picker-date{
+  background-color: @pickable-date-non-picked-background;
   border: 1px solid @border-color;
   box-sizing: border-box;
-  color:@pickable-day-non-picked-color;
+  color:@pickable-date-non-picked-color;
 }
 
-.picker-day.today, .picker-day.today:hover, .picker-day.today.picker-selected, .picker-day.today.picker-off, .picker-day.today.picker-off:hover{
-  color: @picker-day-today;
+.picker-date.today, .picker-date.today:hover, .picker-date.today.picker-selected, .picker-date.today.picker-off, .picker-date.today.picker-off:hover{
+  color: @picker-date-today;
   font-weight: bold;
 }
 
-.picker-day:not(.picker-off):not(.picker-empty):hover {
-  background-color: @pickable-day-picked-background;
-  color: @pickable-day-picked-color;
+.picker-date:not(.picker-off):not(.picker-empty):hover {
+  background-color: @pickable-date-picked-background;
+  color: @pickable-date-picked-color;
   cursor: pointer;
 }
 
-.picker-day.picker-selected{
-  background-color: @pickable-day-picked-background;
-  color: @pickable-day-picked-color;
+.picker-date.picker-selected{
+  background-color: @pickable-date-picked-background;
+  color: @pickable-date-picked-color;
 }
 
-.picker-day.picker-off, .picker-day.picker-off:hover{
-  background-color: @non-pickable-day-background;
-  color: @non-pickable-day-color;
+.picker-date.picker-off, .picker-date.picker-off:hover{
+  background-color: @non-pickable-date-background;
+  color: @non-pickable-date-color;
   cursor: default;
 }
 
-.picker-day.picker-empty, .picker-day.picker-empty:hover{
-  background-color: @empty-day-background;
+.picker-date.picker-empty, .picker-date.picker-empty:hover{
+  background-color: @empty-date-background;
   cursor: default;
 }
