@@ -18,6 +18,26 @@
     <script type="text/javascript" src="multipleDatePicker.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
     <title>Multipledatepicker by arca-computing</title>
+    <style>
+    /*apply colors if not selected, if selected I want the default selected css*/
+.picker-date.holiday:not(.picker-selected){
+    background-color: #00ffa2;
+    color: #fff;
+}
+
+/*if my holiday isn't clickable (it's the case in the demo)*/
+.picker-date.holiday.picker-off{
+    background-color: #00a267;
+    color: #fff;
+    cursor: default;
+}
+
+/*my birthday, is clickable*/
+.picker-date.birthday:not(.picker-selected){
+    background-color: #ded100;
+    color: #000;
+}
+    </style>
   </head>
 
 <body ng-controller="demoController">
