@@ -58,6 +58,11 @@ angular.module('multipleDatePicker', [])
                 allDaysOff: '=?',
                 /*
                  * Type: boolean
+                 * Set all days unselectable by default except highlighted days
+                 * */
+                allDaysOffExceptHighlightDays: '=?',
+                /*
+                 * Type: boolean
                  * Sunday be the first day of week, default will be Monday
                  * */
                 sundayFirstDay: '=?',
@@ -143,6 +148,10 @@ angular.module('multipleDatePicker', [])
                 }, true);
 
                 scope.$watch('allDaysOff', function () {
+                    scope.generate();
+                }, true);
+
+                scope.$watch('allDaysOffExceptHighlightDays', function () {
                     scope.generate();
                 }, true);
 
@@ -280,7 +289,15 @@ angular.module('multipleDatePicker', [])
                             date.css = hlDay.length > 0 ? hlDay[0].css : '';
                             date.title = hlDay.length > 0 ? hlDay[0].title : '';
                         }
-                        date.selectable = !scope.isDayOff(scope, date);
+
+                        if (!scope.allDaysOffExceptHighlightDays) {
+                            date.selectable = !scope.isDayOff(scope, date);
+                        } else {
+                            date.selectable = (angular.isArray(scope.highlightDays) && scope.highlightDays.some(function (highlightDay) {
+                                return date.isSame(highlightDay.date, 'day') && highlightDay.selectable;
+                            }));
+                        }
+
                         date.selected = scope.isSelected(scope, date);
                         date.today = date.isSame(now, 'day');
                         return date;
