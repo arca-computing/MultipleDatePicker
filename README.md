@@ -1,7 +1,7 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
-###Version 1.2
+###Version 1.2.0
 From a good idea of [Asopus](https://github.com/Asopus) I added a new property : **highlight-days** so **days-off** becomes deprecated.
 
 As usual, check the demo page [http://arca-computing.github.io/MultipleDatePicker/](http://arca-computing.github.io/MultipleDatePicker/)
