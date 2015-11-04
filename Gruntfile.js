@@ -17,7 +17,7 @@ module.exports = function(grunt) {
                 src: [
                     'multipleDatePicker.js'
                 ],
-                dest: 'dist/multipleDatePicker.min.js'
+                dest: 'dist/multipleDatePicker.js'
             }
         },
         uglify: {
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
             },
             dist: {
-                src: 'dist/multipleDatePicker.min.js',
+                src: 'dist/multipleDatePicker.js',
                 dest: 'dist/multipleDatePicker.min.js'
             }
         },
@@ -82,6 +82,15 @@ module.exports = function(grunt) {
             }
         },
 
+        version: {
+            options:{
+                prefix: '"?version"?\\s*[:=]\\s*"?'
+            },
+            defaults: {
+                src: ['multipleDatePicker.js', 'bower.json']
+            }
+        },
+
         watch: {
             js: {
                 files: ['multipleDatePicker.js'],
@@ -94,6 +103,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-version');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -103,6 +113,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['jshint', 'clean', 'concat:js', 'uglify', 'less', 'autoprefixer']);
+    grunt.registerTask('default', ['jshint', 'clean', 'version', 'concat:js', 'uglify', 'less', 'autoprefixer']);
     grunt.registerTask('dev', ['jshint', 'clean', 'concat:js', 'uglify', 'less', 'autoprefixer', 'watch']);
 };
