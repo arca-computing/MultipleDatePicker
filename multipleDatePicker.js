@@ -1,7 +1,7 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
  @date: July 2014
- @version: 1.2.1
+ @version: 1.3.0
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -9,11 +9,34 @@
  Feel free to edit and share this piece of code, our idea is to keep it simple ;)
  */
 angular.module('multipleDatePicker', [])
-    .directive('multipleDatePicker', ['$log', function ($log) {
+    .factory('multipleDatePickerBroadcast', ['$rootScope', function($rootScope) {
+        var sharedService = {};
+
+        sharedService.calendarId = null;
+        sharedService.message = '';
+
+        sharedService.resetOrder = function(calendarId) {
+            this.message = 'reset';
+            this.calendarId = calendarId;
+            this.broadcastItem();
+        };
+
+        sharedService.broadcastItem = function() {
+            $rootScope.$broadcast('handleMultipleDatePickerBroadcast');
+        };
+
+        return sharedService;
+    }])
+    .directive('multipleDatePicker', ['$log', 'multipleDatePickerBroadcast', function ($log, multipleDatePickerBroadcast) {
         "use strict";
         return {
             restrict: 'AE',
             scope: {
+                /*
+                 * Type : String/Long (avoid 0 value)
+                 * Will be used to identified calendar when using broadcast messages
+                 * */
+                calendarId: '=?',
                 /*
                  * DEPRECATED : use dayClick
                  * Type: function(timestamp, boolean)
@@ -113,17 +136,28 @@ angular.module('multipleDatePicker', [])
                         }
 
                         return days;
-                    };
-
-                /*scope functions*/
-                scope.$watch('daysSelected', function (newValue) {
-                    if (newValue) {
-                        var momentDates = [];
-                        newValue.map(function (timestamp) {
+                    },
+                    reset = function(){
+                        var daysSelected = scope.daysSelected || [],
+                            momentDates = [];
+                        daysSelected.map(function (timestamp) {
                             momentDates.push(moment(timestamp));
                         });
                         scope.convertedDaysSelected = momentDates;
                         scope.generate();
+                    };
+
+                /* broadcast functions*/
+                scope.$on('handleMultipleDatePickerBroadcast', function() {
+                    if(multipleDatePickerBroadcast.message === 'reset' && (!multipleDatePickerBroadcast.calendarId || multipleDatePickerBroadcast.calendarId === scope.calendarId)){
+                        reset();
+                    }
+                });
+
+                /*scope functions*/
+                scope.$watch('daysSelected', function (newValue) {
+                    if (newValue) {
+                        reset();
                     }
                 }, true);
 

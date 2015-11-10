@@ -1,6 +1,9 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
+###Version 1.3.0
+Adding `multipleDatePickerBroadcast` to broadcast orders to calendar. Check the demo.
+
 ###Version 1.2.1
 Merged [PR#35](https://github.com/arca-computing/MultipleDatePicker/pull/35) to add past and future classes to dates
 
