@@ -46,6 +46,14 @@ angular.module('multipleDatePicker', [])
                 callback: '&',
                 dayClick: '=?',
                 dayHover: '=?',
+
+                /*
+                 * Type: moment date
+                 * Month to be displayed
+                 * Default is current month
+                 */
+                month: '=?',
+
                 /*
                  * Type: function(newMonth, oldMonth)
                  * Will be called when month changed
