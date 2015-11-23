@@ -1,6 +1,9 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
+###Version 1.3.2
+Adding `showDaysOfSurroundingMonths`. Check the demo.
+
 ###Version 1.3.0
 Adding `multipleDatePickerBroadcast` to broadcast orders to calendar. Check the demo.
 
