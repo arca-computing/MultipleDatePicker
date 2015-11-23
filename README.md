@@ -5,6 +5,9 @@
 Adding `showDaysOfSurroundingMonths`. Check the demo.
 
 ###Version 1.3.0
+Adding MIT LICENSE :)
+
+###Version 1.3.0
 Adding `multipleDatePickerBroadcast` to broadcast orders to calendar. Check the demo.
 
 ###Version 1.2.1
