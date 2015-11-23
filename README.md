@@ -4,7 +4,7 @@
 ###Version 1.3.2
 Adding `showDaysOfSurroundingMonths`. Check the demo.
 
-###Version 1.3.0
+###Version 1.3.1
 Adding MIT LICENSE :)
 
 ###Version 1.3.0
