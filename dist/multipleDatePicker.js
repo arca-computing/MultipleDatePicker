@@ -1,7 +1,7 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
  @date: July 2014
- @version: 1.3.2
+ @version: 1.3.3
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -96,17 +96,27 @@ angular.module('multipleDatePicker', [])
                  * Type: boolean
                  * if true can't go back in months before today's month
                  * */
-                disallowBackPastMonths: '=',
+                disallowBackPastMonths: '=?',
                 /*
                  * Type: boolean
                  * if true can't go in futur months after today's month
                  * */
-                disallowGoFuturMonths: '=',
+                disallowGoFuturMonths: '=?',
                 /*
                  * Type: boolean
                  * if true empty boxes will be filled with days of previous/next month
                  * */
-                showDaysOfSurroundingMonths: '='
+                showDaysOfSurroundingMonths: '=?',
+                /*
+                 * Type: string
+                 * CSS classes to apply to days of next/previous months
+                 * */
+                cssDaysOfSurroundingMonths: '=?',
+                /*
+                 * Type: boolean
+                 * if true events on empty boxes (or next/previous month) will be fired
+                 * */
+                fireEventsForDaysOfSurroundingMonths: '=?'
             },
             template: '<div class="multiple-date-picker">' +
             '<div class="picker-top-row">' +
@@ -118,7 +128,7 @@ angular.module('multipleDatePicker', [])
             '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>' +
             '</div>' +
             '<div class="picker-days-row">' +
-            '<div class="text-center picker-day {{day.css}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today,\'past\':day.past,\'future\':day.future, \'picker-empty\':day.otherMonth}">{{day ? day.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.format(\'D\') : \'\'}}</div>' +
+            '<div class="text-center picker-day {{!day.otherMonth || showDaysOfSurroundingMonths ? day.css : \'\'}} {{day.otherMonth ? cssDaysOfSurroundingMonths : \'\'}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.selected, \'picker-off\':!day.selectable, \'today\':day.today,\'past\':day.past,\'future\':day.future, \'picker-other-month\':day.otherMonth}">{{day ? day.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.format(\'D\') : \'\'}}</div>' +
             '</div>' +
             '</div>',
             link: function (scope) {
@@ -200,6 +210,7 @@ angular.module('multipleDatePicker', [])
                 scope.disableBackButton = false;
                 scope.disableNextButton = false;
                 scope.daysOfWeek = getDaysOfWeek();
+                scope.cssDaysOfSurroundingMonths = scope.cssDaysOfSurroundingMonths || 'picker-empty';
 
                 /**
                  * Called when user clicks a date
@@ -212,7 +223,7 @@ angular.module('multipleDatePicker', [])
                 scope.toggleDay = function (event, momentDate) {
                     event.preventDefault();
 
-                    if(momentDate.otherMonth){
+                    if(momentDate.otherMonth && !scope.fireEventsForDaysOfSurroundingMonths){
                         return;
                     }
 
@@ -334,7 +345,6 @@ angular.module('multipleDatePicker', [])
                             date.future = date.isAfter(now, 'day');
                             if (!date.isSame(scope.month, 'month')) {
                                 date.otherMonth = true;
-                                date.selectable = false;
                             }
                             return date;
                         },
