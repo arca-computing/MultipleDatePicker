@@ -1,6 +1,9 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
+###Version 1.3.4
+Added `disableDaysBefore` and `disableDaysAfter`. Check the demo.
+
 ###Version 1.3.3
 Improving `showDaysOfSurroundingMonths` with `cssDaysOfSurroundingMonths` and `fireEventsForDaysOfSurroundingMonths`. Check the demo.
 

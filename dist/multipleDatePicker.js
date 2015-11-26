@@ -1,7 +1,7 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
  @date: July 2014
- @version: 1.3.3
+ @version: 1.3.4
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -116,7 +116,17 @@ angular.module('multipleDatePicker', [])
                  * Type: boolean
                  * if true events on empty boxes (or next/previous month) will be fired
                  * */
-                fireEventsForDaysOfSurroundingMonths: '=?'
+                fireEventsForDaysOfSurroundingMonths: '=?',
+                /*
+                 * Type: any type moment can parse
+                 * If filled will disable all days before this one (not included)
+                 * */
+                disableDaysBefore: '=?',
+                /*
+                 * Type: any type moment can parse
+                 * If filled will disable all days after this one (not included)
+                 * */
+                disableDaysAfter: '=?'
             },
             template: '<div class="multiple-date-picker">' +
             '<div class="picker-top-row">' +
@@ -304,6 +314,8 @@ angular.module('multipleDatePicker', [])
                 /*Check if the date is off : unselectable*/
                 scope.isDayOff = function (scope, date) {
                     return scope.allDaysOff ||
+                        (!!scope.disableDaysBefore && moment(date).isBefore(scope.disableDaysBefore, 'day')) ||
+                        (!!scope.disableDaysAfter && moment(date).isAfter(scope.disableDaysAfter, 'day')) ||
                         (angular.isArray(scope.weekDaysOff) && scope.weekDaysOff.some(function (dayOff) {
                             return date.day() === dayOff;
                         })) ||
