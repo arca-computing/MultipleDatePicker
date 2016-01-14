@@ -1,7 +1,7 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @date: July 2014
- @version: 1.3.4
+ @date: January 2016
+ @version: 1.4.0
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -37,13 +37,6 @@ angular.module('multipleDatePicker', [])
                  * Will be used to identified calendar when using broadcast messages
                  * */
                 calendarId: '=?',
-                /*
-                 * DEPRECATED : use dayClick
-                 * Type: function(timestamp, boolean)
-                 * Will be called when un/select a date
-                 * Param timestamp will be the date at midnight
-                 * */
-                callback: '&',
                 dayClick: '=?',
                 dayHover: '=?',
 
@@ -71,12 +64,6 @@ angular.module('multipleDatePicker', [])
                  * /!\ Sunday = 0, Monday = 1 ... Saturday = 6
                  * */
                 weekDaysOff: '=?',
-                /*
-                 * DEPRECATED : use highlightDays
-                 * Type: array of milliseconds timestamps
-                 * Days not selectables
-                 * */
-                daysOff: '=?',
                 /*
                  * Type: array of objects cf doc
                  * Days highlights
@@ -196,13 +183,6 @@ angular.module('multipleDatePicker', [])
                     scope.generate();
                 }, true);
 
-                scope.$watch('daysOff', function (value) {
-                    if (value !== undefined) {
-                        $log.warn('daysOff option deprecated since version 1.1.6, please use highlightDays');
-                    }
-                    scope.generate();
-                }, true);
-
                 scope.$watch('highlightDays', function () {
                     scope.generate();
                 }, true);
@@ -228,7 +208,6 @@ angular.module('multipleDatePicker', [])
                  * @param Moment momentDate a moment object extended with selected and isSelectable booleans
                  * @see #momentDate
                  * @callback dayClick
-                 * @callback callback deprecated
                  */
                 scope.toggleDay = function (event, momentDate) {
                     event.preventDefault();
@@ -256,11 +235,6 @@ angular.module('multipleDatePicker', [])
                             scope.convertedDaysSelected = scope.convertedDaysSelected.filter(function (date) {
                                 return date.valueOf() !== momentDate.valueOf();
                             });
-                        }
-
-                        if (typeof(scope.callback) === "function") {
-                            $log.warn('callback option deprecated, please use dayClick');
-                            scope.callback({timestamp: momentDate.valueOf(), selected: momentDate.selected});
                         }
                     }
                 };
