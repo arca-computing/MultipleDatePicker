@@ -21,6 +21,12 @@ angular.module('multipleDatePicker', [])
             this.broadcastItem();
         };
 
+        sharedService.localeChanged = function (calendarId) {
+            this.message = 'localeChanged';
+            this.calendarId = calendarId;
+            this.broadcastItem();
+        };
+
         sharedService.broadcastItem = function () {
             $rootScope.$broadcast('handleMultipleDatePickerBroadcast');
         };
@@ -163,12 +169,21 @@ angular.module('multipleDatePicker', [])
                         });
                         scope.convertedDaysSelected = momentDates;
                         scope.generate();
-                    };
 
+                    },
+                    onLocalChange = function(){
+                        scope.daysOfWeek = getDaysOfWeek();
+                        scope.month = moment().month(scope.month.format('MMMM YYYY'));
+                    };
                 /* broadcast functions*/
                 scope.$on('handleMultipleDatePickerBroadcast', function () {
-                    if (multipleDatePickerBroadcast.message === 'reset' && (!multipleDatePickerBroadcast.calendarId || multipleDatePickerBroadcast.calendarId === scope.calendarId)) {
-                        reset();
+                    if (!multipleDatePickerBroadcast.calendarId || multipleDatePickerBroadcast.calendarId === scope.calendarId) {
+                        if(multipleDatePickerBroadcast.message === 'reset'){
+                            reset();
+                        }
+                        else if(multipleDatePickerBroadcast.message === 'localeChanged'){
+                            onLocalChange();
+                        }
                     }
                 });
 
@@ -353,3 +368,4 @@ angular.module('multipleDatePicker', [])
             }
         };
     }]);
+
