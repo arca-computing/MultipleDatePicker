@@ -1,5 +1,5 @@
 {
-  "name": "MultipleDatePicker",
+  "name": "multiple-date-picker",
   "version": "1.4.0",
   "devDependencies": {
     "grunt": "~0.4.1",
