@@ -113,7 +113,9 @@ angular.module('multipleDatePicker', [])
                  * Type: any type moment can parse
                  * If filled will disable all days after this one (not included)
                  * */
-                disableDaysAfter: '=?'
+                disableDaysAfter: '=?',
+
+                dateRange: '=?'
             },
             template: '<div class="multiple-date-picker">' +
             '<div class="picker-top-row">' +
@@ -227,6 +229,13 @@ angular.module('multipleDatePicker', [])
                     }
 
                     if (momentDate.selectable && !prevented) {
+                        if ((!scope.rangeStart) || (scope.rangeStart && scope.rangeEnd)) {
+                            scope.rangeStart = momentDate;
+                            scope.rangeEnd = undefined;
+                        } else {
+                            scope.rangeEnd = momentDate;
+                            scope.dateRange = moment.range(scope.rangeStart, scope.rangeEnd);
+                        }
                         momentDate.selected = !momentDate.selected;
 
                         if (momentDate.selected) {
@@ -317,6 +326,10 @@ angular.module('multipleDatePicker', [])
                         lastDay = moment(firstDayOfMonth).endOf('month'),
                         createDate = function () {
                             var date = moment(previousDay.add(1, 'days'));
+                            if (scope.dateRange && scope.dateRange.contains && date.within(scope.dateRange)) {
+                                date.css = 'within-range';
+                                date.title = 'within-range';
+                            }
                             if (angular.isArray(scope.highlightDays)) {
                                 var hlDay = scope.highlightDays.filter(function (d) {
                                     return date.isSame(d.date, 'day');
