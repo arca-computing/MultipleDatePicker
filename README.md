@@ -1,6 +1,10 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #What's new ?
+
+###Version 1.4.1
+ Fixed #44
+ 
 ###Version 1.4.0
  Removed deprecated functions and updates package.json.
 

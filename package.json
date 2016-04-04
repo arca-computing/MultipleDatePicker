@@ -1,6 +1,6 @@
 {
   "name": "multiple-date-picker",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-cli": "^0.1.13",

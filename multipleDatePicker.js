@@ -1,7 +1,7 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
  @date: January 2016
- @version: 1.4.0
+ @version: 1.4.1
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -393,14 +393,17 @@ angular.module('multipleDatePicker', [])
                     if (!scope.dateRange && scope.rangeStart && scope.rangeEnd) {
                         scope.dateRange = moment.range(scope.rangeStart, scope.rangeEnd);
                     }
-                    var previousDay = moment(scope.month).date(0).day(scope.sundayFirstDay ? 0 : 1).subtract(1, 'days'),
-                        firstDayOfMonth = moment(scope.month).date(1),
+                    var previousDay = moment(scope.month).date(0).day(scope.sundayFirstDay ? 0 : 1).subtract(1, 'day');
+                    if (moment(scope.month).date(0).diff(previousDay, 'day') > 6) {
+                        previousDay = previousDay.add(1, 'week');
+                    }
+                    var firstDayOfMonth = moment(scope.month).date(1),
                         days = [],
                         now = moment(),
                         lastDay = moment(firstDayOfMonth).endOf('month'),
-                        createDate = function () {
-                            var date = moment(previousDay.add(1, 'days'));
 
+                        createDate = function () {
+                            var date = moment(previousDay.add(1, 'day'));
                             if (angular.isArray(scope.highlightDays)) {
                                 var hlDay = scope.highlightDays.filter(function (d) {
                                     return date.isSame(d.date, 'day');
