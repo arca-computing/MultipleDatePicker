@@ -38,6 +38,9 @@ gulp.task('version', function(cb){
         gulp.src(['package.json'])
             .pipe(replace(/("version": ")(.*)(")/, '$1' + argv.release + "$3"))
             .pipe(gulp.dest('.'));
+        gulp.src(['bower.json'])
+            .pipe(replace(/("version": ")(.*)(")/, '$1' + argv.release + "$3"))
+            .pipe(gulp.dest('.'));
         gulp.src(['./multipleDatePicker.js'])
             .pipe(replace(/(@version: )(.*)/, '$1' + argv.release))
             .pipe(gulp.dest('.'));
@@ -83,7 +86,7 @@ gulp.task('create-and-push-release', ['uglify', 'styles', 'version'], function(c
     if(!argv.release){
         throw new Error('Need a version to tag, use --release=YOUR_VERSION');
     }
-    runSequence('copy', /*'add', 'commit', 'tag', 'push',*/ cb);
+    runSequence('copy', 'add', 'commit', 'tag', 'push', cb);
 });
 
 /******* COMMAND LINE TASKS ******/
