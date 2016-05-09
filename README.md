@@ -2,6 +2,17 @@
 
 #What's new ?
 
+###Major version 2.0.0
+Fixing #50 and giving the directive a much better way to get/pass dates or interact with it : `ngModel`. 
+
+I removed the way to reset a datepicker, because of the ngModel, no need of complex broadcast with ids, that was a silly id of me :)
+
+I also removed the bower script to use gulp, much better to me.
+
+Minor fixes will come to improve again the directive and documentation.
+
+Check the demo !
+
 ###Version 1.4.1
  Fixed #44
  
