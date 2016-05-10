@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.0
+ @version: 2.0.1
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -60,6 +60,11 @@
                  * Set all days off
                  * */
                 allDaysOff: '=?',
+                /*
+                 * Type: array of moment dates
+                 * Set days allowed (only thos dates will be selectable)
+                 * */
+                daysAllowed: '=?',
                 /*
                  * Type: boolean
                  * Sunday be the first day of week, default will be Monday
@@ -158,6 +163,10 @@
                 }, true);
 
                 scope.$watch('allDaysOff', function () {
+                    scope.generate();
+                }, true);
+
+                scope.$watch('daysAllowed', function () {
                     scope.generate();
                 }, true);
 
@@ -262,6 +271,9 @@
                         })) ||
                         (angular.isArray(scope.daysOff) && scope.daysOff.some(function (dayOff) {
                             return day.date.isSame(dayOff, 'day');
+                        })) ||
+                        (angular.isArray(scope.daysAllowed) && !scope.daysAllowed.some(function (dayAllowed) {
+                            return day.date.isSame(dayAllowed, 'day');
                         })) ||
                         (angular.isArray(scope.highlightDays) && scope.highlightDays.some(function (highlightDay) {
                             return day.date.isSame(highlightDay.date, 'day') && !highlightDay.selectable;
