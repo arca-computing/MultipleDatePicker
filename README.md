@@ -2,6 +2,11 @@
 
 #What's new ?
 
+###Version 2.0.3
+Fixed #60 - Now listen to moment.locale change so change month and days labels.
+
+Update demo page too
+
 ###Major version 2.0.0
 Fixing #50 and giving the directive a much better way to get/pass dates or interact with it : `ngModel`. 
 
@@ -14,10 +19,10 @@ Minor fixes will come to improve again the directive and documentation.
 Check the demo !
 
 ###Version 1.4.1
- Fixed #44
+Fixed #44
  
 ###Version 1.4.0
- Removed deprecated functions and updates package.json.
+Removed deprecated functions and updates package.json.
 
 ###Version 1.3.4
 Added `disableDaysBefore` and `disableDaysAfter`. Check the demo.

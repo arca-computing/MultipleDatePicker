@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.2
+ @version: 2.0.3
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -109,7 +109,7 @@
             template: '<div class="multiple-date-picker">' +
             '<div class="picker-top-row">' +
             '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>' +
-            '<div class="text-center picker-month">{{month.format(\'MMMM YYYY\')}}</div>' +
+            '<div class="text-center picker-month">{{monthToDisplay}}</div>' +
             '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>' +
             '</div>' +
             '<div class="picker-days-week-row">' +
@@ -147,6 +147,12 @@
                         }
 
                         return days;
+                    },
+                    getMonthYearToDisplay = function(){
+                        var months = moment().localeData()._months,
+                            month = months[scope.month.month()];
+
+                        return month.charAt(0).toUpperCase() + month.slice(1) + ' ' + scope.month.format('YYYY');
                     };
 
                 /*scope functions*/
@@ -168,6 +174,13 @@
 
                 scope.$watch('daysAllowed', function () {
                     scope.generate();
+                }, true);
+
+                scope.$watch(function(){
+                    return moment.locale();
+                }, function () {
+                    scope.daysOfWeek = getDaysOfWeek();
+                    scope.monthToDisplay = getMonthYearToDisplay();
                 }, true);
 
                 //default values
@@ -289,6 +302,7 @@
 
                 /*Generate the calendar*/
                 scope.generate = function () {
+                    scope.monthToDisplay = getMonthYearToDisplay();
                     var previousDay = moment(scope.month).date(0).day(scope.sundayFirstDay ? 0 : 1).subtract(1, 'day');
 
                     if (moment(scope.month).date(0).diff(previousDay, 'day') > 6) {
