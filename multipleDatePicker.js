@@ -72,6 +72,11 @@
                 sundayFirstDay: '=?',
                 /*
                  * Type: boolean
+                 * if true can't navigate
+                 * */
+                disableNavigation: '=?',
+                /*
+                 * Type: boolean
                  * if true can't go back in months before today's month
                  * */
                 disallowBackPastMonths: '=?',
@@ -128,8 +133,8 @@
                         var today = moment(),
                             previousMonth = moment(scope.month).subtract(1, 'month'),
                             nextMonth = moment(scope.month).add(1, 'month');
-                        scope.disableBackButton = scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month');
-                        scope.disableNextButton = scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month');
+                        scope.disableBackButton = scope.disableNavigation || (scope.disallowBackPastMonths && today.isAfter(previousMonth, 'month'));
+                        scope.disableNextButton = scope.disableNavigation || (scope.disallowGoFuturMonths && today.isBefore(nextMonth, 'month'));
                     },
                     getDaysOfWeek = function () {
                         /*To display days of week names in moment.lang*/
