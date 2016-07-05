@@ -2,10 +2,15 @@
 
 #What's new ?
 
+###Version 2.0.4
+Fixed #59 - Now you can disable the navigation with `disable-navigation`
+
+Updated demo page too
+
 ###Version 2.0.3
 Fixed #60 - Now listen to moment.locale change so change month and days labels.
 
-Update demo page too
+Updated demo page too
 
 ###Major version 2.0.0
 Fixing #50 and giving the directive a much better way to get/pass dates or interact with it : `ngModel`. 
