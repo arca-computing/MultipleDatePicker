@@ -2,6 +2,11 @@
 
 #What's new ?
 
+###Version 2.0.5
+New option to quickly change year `change-year-past` & `change-year-future`
+
+Updated demo page too
+
 ###Version 2.0.4
 Fixed #59 - Now you can disable the navigation with `disable-navigation`
 
