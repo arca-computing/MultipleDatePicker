@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.6
+Now watch `month` so if you change it, calendar will update. Should have done it a long time ago :)
+
 ###Version 2.0.5
 New option to quickly change year `change-year-past` & `change-year-future`
 
