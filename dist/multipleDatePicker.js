@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.6
+ @version: 2.0.7
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -127,7 +127,7 @@
                 '<div class="text-center picker-month">' +
                 '{{monthToDisplay}} ' +
                 '<span ng-if="yearsForSelect.length < 2">{{yearToDisplay}}</span>' +
-                '<select ng-if="yearsForSelect.length > 1" ng-model="year" ng-change="changeYear(year)" ng-options="y for y in yearsForSelect"><select>' +
+                '<select ng-if="yearsForSelect.length > 1" ng-model="year" ng-change="changeYear(year)" ng-options="y for y in yearsForSelect"></select>' +
                 '</div>' +
                 '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>' +
                 '</div>' +
@@ -135,7 +135,7 @@
                 '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>' +
                 '</div>' +
                 '<div class="picker-days-row">' +
-                '<div class="text-center picker-day {{!day.mdp.otherMonth || showDaysOfSurroundingMonths ? day.css : \'\'}} {{day.mdp.otherMonth ? cssDaysOfSurroundingMonths : \'\'}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-class="{\'picker-selected\':day.mdp.selected, \'picker-off\':!day.selectable, \'today\':day.mdp.today,\'past\':day.mdp.past,\'future\':day.mdp.future, \'picker-other-month\':day.mdp.otherMonth}">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
+                '<div class="text-center picker-day {{getDayClasses(day)}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
                 '</div>' +
                 '</div>',
                 link: function (scope) {
@@ -287,6 +287,35 @@
                         if (!prevented) {
                             day.mdp.hover = event.type === 'mouseover';
                         }
+                    };
+
+                    scope.getDayClasses = function(day){
+                        var css = '';
+                        if(day.css && (!day.mdp.otherMonth || scope.showDaysOfSurroundingMonths)){
+                            css += ' ' + day.css;
+                        }
+                        if(scope.cssDaysOfSurroundingMonths && day.mdp.otherMonth){
+                            css += ' ' + scope.cssDaysOfSurroundingMonths;
+                        }
+                        if(day.mdp.selected){
+                            css += ' picker-selected';
+                        }
+                        if(!day.selectable){
+                            css += ' picker-off';
+                        }
+                        if(day.mdp.today){
+                            css += ' today';
+                        }
+                        if(day.mdp.past){
+                            css += ' past';
+                        }
+                        if(day.mdp.future){
+                            css += ' future';
+                        }
+                        if(day.mdp.otherMonth){
+                            css += ' picker-other-month';
+                        }
+                        return css;
                     };
 
                     /*Navigate to previous month*/

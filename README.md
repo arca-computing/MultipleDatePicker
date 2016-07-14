@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.7
+Fixed a problem with ngAnimate and css #54
+
 ###Version 2.0.6
 Now watch `month` so if you change it, calendar will update. Should have done it a long time ago :)
 
