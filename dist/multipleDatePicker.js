@@ -119,7 +119,13 @@
                      * Number of years from scope.month to show in future in select
                      * note : will change year into a select
                      */
-                    changeYearFuture: '=?'
+                    changeYearFuture: '=?',
+                    /*
+                     * Type: function
+                     * The function to be called when a user right-clicks on a date
+                     * note : don't include parentheses when you pass the function!
+                     */
+                    rightClick: '=?'
                 },
                 template: '<div class="multiple-date-picker">' +
                 '<div class="picker-top-row">' +
@@ -135,7 +141,7 @@
                 '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>' +
                 '</div>' +
                 '<div class="picker-days-row">' +
-                '<div class="text-center picker-day {{getDayClasses(day)}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
+                '<div class="text-center picker-day {{getDayClasses(day)}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-right-click="rightClick($event,day)">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
                 '</div>' +
                 '</div>',
                 link: function (scope) {
@@ -438,7 +444,18 @@
         ;
 
     angular.module('multipleDatePicker', [])
-        .directive('multipleDatePicker', multipleDatePicker);
+        .directive('multipleDatePicker', multipleDatePicker)
+        .directive('ngRightClick',function($parse){
+          return function(scope,element,attrs){
+            var fn = $parse(attrs.ngRightClick);
+            element.bind('contextmenu',function(event){
+              scope.$apply(function(){
+                event.preventDefault();
+                fn(scope,{$event:event});
+              });
+            });
+          }
+        });
 
 })
 (window.angular);

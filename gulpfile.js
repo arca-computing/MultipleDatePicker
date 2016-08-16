@@ -20,7 +20,7 @@ gulp.task('lint-app', function () {
         .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('uglify', ['lint-app'], function () {
+gulp.task('uglify', function () {
     return gulp.src('./multipleDatePicker.js')
         .pipe(uglify())
         .pipe(rename('multipleDatePicker.min.js'))
