@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.8
+fixed [#68](https://github.com/arca-computing/MultipleDatePicker/issues/68)
+
 ###Version 2.0.7
 Fixed a problem with ngAnimate and css #54
 
