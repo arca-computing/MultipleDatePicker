@@ -260,9 +260,14 @@
                             if (day.mdp.selected) {
                                 scope.ngModel.push(day.date);
                             } else {
-                                scope.ngModel = scope.ngModel.filter(function (date) {
-                                    return !day.date.isSame(date, 'day');
-                                });
+                                var idx = -1;
+                                for (var i = 0; i < scope.ngModel.length; ++i){
+                                    if (scope.ngModel[i].isSame(day.date)){
+                                        idx = i;
+                                        break;
+                                    }
+                                }
+                                if(idx !== -1) scope.ngModel.splice(idx,1);
                             }
                         }
                     };
