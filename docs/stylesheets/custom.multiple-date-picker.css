@@ -1,0 +1,46 @@
+.clickable{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.picker-day.picker-other-month-custom{
+    background-color: #d17357;
+    color: #fff;
+}
+
+.picker-day.picker-other-month-custom:hover{
+    cursor: pointer;
+    background-color: #ae5d4a;
+    color: #fff;
+}
+
+.picker-day.picker-other-month-custom.picker-selected{
+    background-color: #9c5244;
+}
+
+.picker-day.holiday{
+    background-color: #00ffa2;
+    color: #fff;
+}
+
+.picker-day.holiday.picker-selected{
+    background-color: #00ae69;
+    color: #fff;
+}
+
+.picker-day.holiday.picker-off{
+    background-color: #00a267;
+    color: #fff;
+    cursor: default;
+}
+
+.picker-day.holiday:not(.picker-off):hover{
+    background-color: #00e795;
+    color: #fff;
+}
+
+
+.picker-day.birthday:not(.picker-selected){
+    background-color: #ded100;
+    color: #000;
+}

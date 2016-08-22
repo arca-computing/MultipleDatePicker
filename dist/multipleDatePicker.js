@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.8
+ @version: 2.0.9
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -35,6 +35,11 @@
                      * Will be called to manage hover of a date
                      */
                     dayHover: '=?',
+                    /*
+                     * Type: function
+                     * The function to be called when a user right-clicks on a date
+                     */
+                    rightClick: '=?',
                     /*
                      * Type: moment date
                      * Month to be displayed
@@ -119,13 +124,7 @@
                      * Number of years from scope.month to show in future in select
                      * note : will change year into a select
                      */
-                    changeYearFuture: '=?',
-                    /*
-                     * Type: function
-                     * The function to be called when a user right-clicks on a date
-                     * note : don't include parentheses when you pass the function!
-                     */
-                    rightClick: '=?'
+                    changeYearFuture: '=?'
                 },
                 template: '<div class="multiple-date-picker">' +
                 '<div class="picker-top-row">' +
@@ -141,7 +140,7 @@
                 '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>' +
                 '</div>' +
                 '<div class="picker-days-row">' +
-                '<div class="text-center picker-day {{getDayClasses(day)}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" ng-right-click="rightClick($event,day)">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
+                '<div class="text-center picker-day {{getDayClasses(day)}}" title="{{day.title}}" ng-repeat="day in days" ng-click="toggleDay($event, day)" ng-mouseover="hoverDay($event, day)" ng-mouseleave="dayHover($event, day)" mdp-right-click="rightClicked($event,day)">{{day ? day.mdp.otherMonth && !showDaysOfSurroundingMonths ? \'&nbsp;\' : day.date.format(\'D\') : \'\'}}</div>' +
                 '</div>' +
                 '</div>',
                 link: function (scope) {
@@ -181,14 +180,14 @@
                         },
                         getYearsForSelect = function () {
                             var now = moment(),
-                                changeYearPast = Math.max(0, parseInt(scope.changeYearPast, 10) || 0),
-                                changeYearFuture = Math.max(0, parseInt(scope.changeYearFuture, 10) || 0),
+                                changeYearPast = Math.max(0, parseInt(scope.changeYearPast, 10) || 0),
+                                changeYearFuture = Math.max(0, parseInt(scope.changeYearFuture, 10) || 0),
                                 min = moment(scope.month).subtract(changeYearPast, 'year'),
                                 max = moment(scope.month).add(changeYearFuture, 'year'),
                                 result = [];
                             max.add(1, 'year');
                             for (var m = moment(min); max.isAfter(m, 'YEAR'); m.add(1, 'year')) {
-                                if((!scope.disallowBackPastMonths || (m.isAfter(now, 'year') || m.isSame(now, 'year'))) && (!scope.disallowGoFuturMonths || (m.isBefore(now, 'year') || m.isSame(now, 'year')))) {
+                                if ((!scope.disallowBackPastMonths || (m.isAfter(now, 'year') || m.isSame(now, 'year'))) && (!scope.disallowGoFuturMonths || (m.isBefore(now, 'year') || m.isSame(now, 'year')))) {
                                     result.push(m.format('YYYY'));
                                 }
                             }
@@ -267,13 +266,13 @@
                                 scope.ngModel.push(day.date);
                             } else {
                                 var idx = -1;
-                                for (var i = 0; i < scope.ngModel.length; ++i){
-                                    if (scope.ngModel[i].isSame(day.date)){
+                                for (var i = 0; i < scope.ngModel.length; ++i) {
+                                    if (scope.ngModel[i].isSame(day.date)) {
                                         idx = i;
                                         break;
                                     }
                                 }
-                                if(idx !== -1) scope.ngModel.splice(idx,1);
+                                if (idx !== -1) scope.ngModel.splice(idx, 1);
                             }
                         }
                     };
@@ -300,30 +299,42 @@
                         }
                     };
 
-                    scope.getDayClasses = function(day){
+                    /**
+                     * Right clicked on day
+                     * @param event Click event
+                     * @param day Day clicked
+                     */
+                    scope.rightClicked = function (event, day) {
+                        if (typeof scope.rightClick === 'function') {
+                            event.preventDefault();
+                            scope.rightClick(event, day);
+                        }
+                    };
+
+                    scope.getDayClasses = function (day) {
                         var css = '';
-                        if(day.css && (!day.mdp.otherMonth || scope.showDaysOfSurroundingMonths)){
+                        if (day.css && (!day.mdp.otherMonth || scope.showDaysOfSurroundingMonths)) {
                             css += ' ' + day.css;
                         }
-                        if(scope.cssDaysOfSurroundingMonths && day.mdp.otherMonth){
+                        if (scope.cssDaysOfSurroundingMonths && day.mdp.otherMonth) {
                             css += ' ' + scope.cssDaysOfSurroundingMonths;
                         }
-                        if(day.mdp.selected){
+                        if (day.mdp.selected) {
                             css += ' picker-selected';
                         }
-                        if(!day.selectable){
+                        if (!day.selectable) {
                             css += ' picker-off';
                         }
-                        if(day.mdp.today){
+                        if (day.mdp.today) {
                             css += ' today';
                         }
-                        if(day.mdp.past){
+                        if (day.mdp.past) {
                             css += ' past';
                         }
-                        if(day.mdp.future){
+                        if (day.mdp.future) {
                             css += ' future';
                         }
-                        if(day.mdp.otherMonth){
+                        if (day.mdp.otherMonth) {
                             css += ' picker-other-month';
                         }
                         return css;
@@ -445,17 +456,16 @@
 
     angular.module('multipleDatePicker', [])
         .directive('multipleDatePicker', multipleDatePicker)
-        .directive('ngRightClick',function($parse){
-          return function(scope,element,attrs){
-            var fn = $parse(attrs.ngRightClick);
-            element.bind('contextmenu',function(event){
-              scope.$apply(function(){
-                event.preventDefault();
-                fn(scope,{$event:event});
-              });
-            });
-          }
-        });
+        .directive('mdpRightClick', ['$parse', function ($parse) {
+            return function (scope, element, attrs) {
+                var fn = $parse(attrs.mdpRightClick);
+                element.bind('contextmenu', function (event) {
+                    scope.$apply(function () {
+                        fn(scope, {$event: event});
+                    });
+                });
+            };
+        }]);
 
 })
 (window.angular);
