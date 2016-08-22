@@ -261,13 +261,12 @@
 
                         if (day.selectable && !prevented) {
                             day.mdp.selected = !day.mdp.selected;
-
                             if (day.mdp.selected) {
                                 scope.ngModel.push(day.date);
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
-                                    if (scope.ngModel[i].isSame(day.date)) {
+                                    if (scope.ngModel[i].isSame(day.date,'day')) {
                                         idx = i;
                                         break;
                                     }
