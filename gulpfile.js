@@ -10,6 +10,7 @@ var copy = require('gulp-contrib-copy');
 var argv = require('yargs').argv;
 var git = require('gulp-git');
 var runSequence = require('run-sequence');
+var spawn = require('child_process').spawn;
 
 var distFolder = "./dist";
 
@@ -57,6 +58,11 @@ gulp.task('styles', [], function () {
         .pipe(gulp.dest(distFolder));
 });
 
+/******* NPM ******/
+gulp.task('npm-publish', function (done) {
+    spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
+});
+
 /******* GIT ******/
 gulp.task('tag', function(cb){
     git.tag(argv.release, 'release: ' + argv.release, function (err) {
@@ -86,7 +92,7 @@ gulp.task('create-and-push-release', ['uglify', 'styles', 'version'], function(c
     if(!argv.release){
         throw new Error('Need a version to tag, use --release=YOUR_VERSION');
     }
-    runSequence('copy', 'add', 'commit', 'tag', 'push', cb);
+    runSequence('copy', 'add', 'commit', 'tag', 'push', 'npm-publish', cb);
 });
 
 /******* COMMAND LINE TASKS ******/

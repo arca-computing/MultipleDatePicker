@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.10
+Fixed [#70](https://github.com/arca-computing/MultipleDatePicker/pull/70)
+
 ###Version 2.0.9
 merged [#69](https://github.com/arca-computing/MultipleDatePicker/pull/69)
 moved demo to sub-folder instead of gh-pages branch [Simpler Github Pages publishing](https://github.com/blog/2228-simpler-github-pages-publishing)
