@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.10
+ @version: 2.0.11
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -195,37 +195,69 @@
                         };
 
                     /*scope functions*/
-                    scope.$watch('ngModel', function () {
-                        scope.generate();
-                    }, true);
+                    var watches = [];
+                    watches.push(
+                        scope.$watch('ngModel', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch('month', function () {
-                        scope.generate();
-                    }, true);
+                    watches.push(
+                        scope.$watch('month', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch('highlightDays', function () {
-                        scope.generate();
-                    }, true);
+                    watches.push(
+                        scope.$watch('highlightDays', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch('weekDaysOff', function () {
-                        scope.generate();
-                    }, true);
+                    watches.push(
+                        scope.$watch('weekDaysOff', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch('allDaysOff', function () {
-                        scope.generate();
-                    }, true);
+                    watches.push(
+                        scope.$watch('allDaysOff', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch('daysAllowed', function () {
-                        scope.generate();
-                    }, true);
+                    watches.push(
+                        scope.$watch('daysAllowed', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
-                    scope.$watch(function () {
-                        return moment.locale();
-                    }, function () {
-                        scope.daysOfWeek = getDaysOfWeek();
-                        scope.monthToDisplay = getMonthYearToDisplay();
-                    }, true);
+                    watches.push(
+                        scope.$watch('disableDaysBefore', function () {
+                            scope.generate();
+                        }, true)
+                    );
 
+                    watches.push(
+                        scope.$watch('disableDaysAfter', function () {
+                            scope.generate();
+                        }, true)
+                    );
+
+                    watches.push(
+                        scope.$watch(function () {
+                            return moment.locale();
+                        }, function () {
+                            scope.daysOfWeek = getDaysOfWeek();
+                            scope.monthToDisplay = getMonthYearToDisplay();
+                        }, true)
+                    );
+
+                    scope.$on('destroy', function () {
+                        for(var i = 0; i < watches.length; i++){
+                            watches[i]();
+                        }
+                    });
                     //default values
                     scope.month = scope.month || moment().startOf('day');
                     scope.days = [];
@@ -266,7 +298,7 @@
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
-                                    if (scope.ngModel[i].isSame(day.date,'day')) {
+                                    if (scope.ngModel[i].isSame(day.date, 'day')) {
                                         idx = i;
                                         break;
                                     }

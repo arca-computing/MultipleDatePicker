@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.11
+Fixed [#71](https://github.com/arca-computing/MultipleDatePicker/issues/71)
+
 ###Version 2.0.10
 Fixed [#70](https://github.com/arca-computing/MultipleDatePicker/pull/70)
 
