@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.11
+ @version: 2.0.12
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -298,9 +298,16 @@
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
-                                    if (scope.ngModel[i].isSame(day.date, 'day')) {
-                                        idx = i;
-                                        break;
+                                    if (moment.isMoment(scope.ngModel[i])) {
+                                        if (scope.ngModel[i].isSame(day.date, 'day')) {
+                                            idx = i;
+                                            break;
+                                        }
+                                    } else {
+                                        if (scope.ngModel[i].date.isSame(day.date, 'day')) {
+                                            idx = i;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (idx !== -1) scope.ngModel.splice(idx, 1);
