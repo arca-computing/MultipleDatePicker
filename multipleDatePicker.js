@@ -298,9 +298,16 @@
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
-                                    if (scope.ngModel[i].isSame(day.date, 'day')) {
-                                        idx = i;
-                                        break;
+                                    if (moment.isMoment(scope.ngModel[i])) {
+                                        if (scope.ngModel[i].isSame(day.date, 'day')) {
+                                            idx = i;
+                                            break;
+                                        }
+                                    } else {
+                                        if (scope.ngModel[i].date.isSame(day.date, 'day')) {
+                                            idx = i;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (idx !== -1) scope.ngModel.splice(idx, 1);
