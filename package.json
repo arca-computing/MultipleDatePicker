@@ -1,6 +1,6 @@
 {
   "name": "multiple-date-picker",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -24,7 +24,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "angular": "^1.5.5",
-    "moment": "^2.13.0"
+    "angular": "^1.X.X",
+    "moment": "^2.X.X"
   }
 }
