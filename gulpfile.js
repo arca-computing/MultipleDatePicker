@@ -51,7 +51,7 @@ gulp.task('version', function(cb){
 
 /******* LESS ******/
 gulp.task('styles', [], function () {
-    return gulp.src('multiple-date-picker.less')
+    return gulp.src('multipleDatePicker.less')
         .pipe(less())
         .pipe(prefix({cascade: true}))
         .pipe(minifyCSS())

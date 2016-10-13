@@ -2,6 +2,10 @@
 
 #What's new ?
 
+###Version 2.0.15
+Merged [#75](https://github.com/arca-computing/MultipleDatePicker/pull/75)
+Renamed generated css file to `multipleDatePicker.css`
+
 ###Version 2.0.14
 Updated bower.json
 
