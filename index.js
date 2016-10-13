@@ -1,2 +1,2 @@
-require('./dist/multiple-date-picker');
+require('./dist/multipleDatePicker');
 module.exports = 'multipleDatePicker';
