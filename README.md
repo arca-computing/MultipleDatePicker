@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.0.14
+Updated bower.json
+
 ###Version 2.0.13
 Fixed [#74](https://github.com/arca-computing/MultipleDatePicker/issues/74)
 
