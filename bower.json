@@ -5,7 +5,7 @@
     "mgohin <mgohin@arca-computing.fr>"
   ],
   "description": "Angular directive to show a calendar and select multiple dates",
-  "main": ["dist/multipleDatePicker.js", "dist/multiple-date-picker.css"],
+  "main": ["dist/multipleDatePicker.js", "dist/multipleDatePicker.css"],
   "keywords": [
     "angular",
     "directive",
