@@ -38,6 +38,7 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
+
             <h1>
                 <a id="what-is-multipledatepicker-" class="anchor" href="#what-is-multipledatepicker"
                    aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is
@@ -557,6 +558,32 @@ angular.module('yourApp', [..., mdp]);
             <multiple-date-picker month-changed="logMonthChanged"></multiple-date-picker>
 
             <h2>
+                <a id="month-click" class="anchor" href="#month-click" aria-hidden="true"><span aria-hidden="true"
+                                                                                                    class="octicon octicon-link"></span></a>month-click
+            </h2>
+
+            <p>The callback will be called everytime you change month (previous or next month). You can prevent the event to happen.
+                <em>Be aware that newMonth and oldMonth given to the callback is first day of month at midnight.</em>
+            </p>
+
+            <p>This example prevent navigation more than 6 month around now.</p>
+            <div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-en">disable6MonthsFromNow</span> <span
+                    class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">event</span>, <span
+                    class="pl-smi">month</span>){
+    if(<span class="pl-s"><span class="pl-en">month</span>.<span class="pl-k">isBefore</span>(<span class="pl-en">moment()</span>.<span class="pl-k">subtract</span>(6, 'month'), 'month') || <span class="pl-en">month</span>.<span class="pl-k">isAfter</span>(<span class="pl-en">moment()</span>.<span class="pl-k">add</span>(6, 'month'), 'month')</span>){
+        <span class="pl-en">event</span>.<span class="pl-k">preventDefault</span>();
+    }
+};</pre>
+            </div>
+
+            <div class="highlight highlight-text-html-basic">
+                <pre>&lt;<span class="pl-ent">multiple-date-picker</span> <span class="pl-e">month-click</span>=<span
+                        class="pl-s"><span class="pl-pds">"</span>disable6MonthsFromNow<span class="pl-pds">"</span></span>/&gt;</pre>
+            </div>
+
+            <multiple-date-picker month-click="disable6MonthsFromNow"></multiple-date-picker>
+
+            <h2>
                 <a id="disable-navigation" class="anchor" href="#disable-navigation"
                    aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>disable-navigation
             </h2>
@@ -700,6 +727,7 @@ angular.module('yourApp', [..., mdp]);
                     <li><a href="#disable-days-before">disable-days-before</a></li>
                     <li><a href="#disable-days-after">disable-days-after</a></li>
                     <li><a href="#month-changed">month-changed</a></li>
+                    <li><a href="#month-click">month-click</a></li>
                     <li><a href="#disable-navigation">disable-navigation</a></li>
                     <li><a href="#disallow-back-past-months">disallow-back-past-months</a></li>
                     <li><a href="#disallow-go-futur-months">disallow-go-futur-months</a></li>

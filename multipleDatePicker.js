@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.0.16
+ @version: 2.1.0
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -52,6 +52,12 @@
                      * Param newMonth/oldMonth will be the first day of month at midnight
                      * */
                     monthChanged: '=?',
+                    /*
+                     * Type: function(event, month)
+                     * Will be called when trying to change month
+                     * Param month will be the first day of month at midnight
+                     * */
+                    monthClick: '=?',
                     /*
                      * Type: array of integers
                      * Recurrent week days not selectables
@@ -128,13 +134,13 @@
                 },
                 template: '<div class="multiple-date-picker">' +
                 '<div class="picker-top-row">' +
-                '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="previousMonth()">&lt;</div>' +
+                '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="changeMonth($event, disableBackButton, -1)">&lt;</div>' +
                 '<div class="text-center picker-month">' +
                 '{{monthToDisplay}} ' +
                 '<span ng-if="yearsForSelect.length < 2">{{yearToDisplay}}</span>' +
                 '<select ng-if="yearsForSelect.length > 1" ng-model="year" ng-change="changeYear(year)" ng-options="y for y in yearsForSelect"></select>' +
                 '</div>' +
-                '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="nextMonth()">&gt;</div>' +
+                '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="changeMonth($event, disableNextButton, 1)">&gt;</div>' +
                 '</div>' +
                 '<div class="picker-days-week-row">' +
                 '<div class="text-center" ng-repeat="day in daysOfWeek">{{day}}</div>' +
@@ -254,7 +260,7 @@
                     );
 
                     scope.$on('destroy', function () {
-                        for(var i = 0; i < watches.length; i++){
+                        for (var i = 0; i < watches.length; i++) {
                             watches[i]();
                         }
                     });
@@ -378,22 +384,28 @@
                         return css;
                     };
 
-                    /*Navigate to previous month*/
-                    scope.previousMonth = function () {
-                        if (!scope.disableBackButton) {
-                            var oldMonth = moment(scope.month);
-                            scope.month = scope.month.subtract(1, 'month');
-                            if (typeof scope.monthChanged == 'function') {
-                                scope.monthChanged(scope.month, oldMonth);
-                            }
+                    /*Navigate to another month*/
+                    scope.changeMonth = function (event, disable, add) {
+                        if (disable) {
+                            return;
                         }
-                    };
 
-                    /*Navigate to next month*/
-                    scope.nextMonth = function () {
-                        if (!scope.disableNextButton) {
+                        event.preventDefault();
+
+                        var prevented = false;
+
+                        event.preventDefault = function () {
+                            prevented = true;
+                        };
+
+                        var monthTo = moment(scope.month).add(add, 'month');
+                        if (typeof scope.monthClick == 'function') {
+                            scope.monthClick(event, monthTo);
+                        }
+
+                        if (!prevented) {
                             var oldMonth = moment(scope.month);
-                            scope.month = scope.month.add(1, 'month');
+                            scope.month = monthTo;
                             if (typeof scope.monthChanged == 'function') {
                                 scope.monthChanged(scope.month, oldMonth);
                             }

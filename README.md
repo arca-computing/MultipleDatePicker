@@ -2,6 +2,9 @@
 
 #What's new ?
 
+###Version 2.1.0
+New feature : monthClick -> [#78](https://github.com/arca-computing/MultipleDatePicker/issues/78)
+
 ###Version 2.0.16
 Merge [#76](https://github.com/arca-computing/MultipleDatePicker/pull/76)
 

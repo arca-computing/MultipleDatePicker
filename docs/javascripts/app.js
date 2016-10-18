@@ -45,4 +45,10 @@ app.controller('demoController', ['$scope', function ($scope) {
         alert('right clicked on ' + day.date.format('YYYY-MM-DD'));
     };
 
+    $scope.disable6MonthsFromNow = function(event, month){
+        if(month.isBefore(moment().subtract(6, 'month'), 'month') || month.isAfter(moment().add(6, 'month'), 'month')){
+            event.preventDefault();
+        }
+    };
+
 }]);
