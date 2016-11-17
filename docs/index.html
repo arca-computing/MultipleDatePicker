@@ -337,7 +337,7 @@ angular.module('yourApp', [..., mdp]);
                 <a id="dayclickdayhover" class="anchor" href="#dayclickdayhover" aria-hidden="true"><span
                         aria-hidden="true" class="octicon octicon-link"></span></a>dayClick/dayHover</h2>
 
-            <p>You can use this callback to check something and prevent the event to happen (click will select/unselect
+            <p>You can use those callbacks to check something and prevent the event to happen (click will select/unselect
                 date, hover will trigger hover event on the date).</p>
 
             <div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-en">checkSelection</span> <span
@@ -354,7 +354,8 @@ angular.module('yourApp', [..., mdp]);
 
             <div class="highlight highlight-text-html-basic">
                 <pre>&lt;<span class="pl-ent">multiple-date-picker</span> <span class="pl-e">day-click</span>=<span
-                        class="pl-s"><span class="pl-pds">"</span>checkSelection<span class="pl-pds">"</span></span>&gt;&lt;/<span
+                        class="pl-s"><span class="pl-pds">"</span>checkSelection<span class="pl-pds">"</span> <span class="pl-e">day-hover</span>=<span
+                        class="pl-s"><span class="pl-pds">"</span>anotherCallbackIfYouNeed<span class="pl-pds">"</span></span>&gt;&lt;/<span
                         class="pl-ent">multiple</span><span class="pl-e">-date-picker</span>&gt;</pre>
             </div>
 
