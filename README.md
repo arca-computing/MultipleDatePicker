@@ -110,6 +110,7 @@ Some bugs fix and improvements, check demo
 The parameter "callback" has been deprecated, it's still working but will be removed in a next version, please update.
 
 #What is MultipleDatePicker ?
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates, a callback is called, you can specify some off days or already selected days.
 
 #Install and demo
