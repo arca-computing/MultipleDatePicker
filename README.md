@@ -1,7 +1,10 @@
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/Join_Chat.svg)](https://gitter.im/arca-computing/MultipleDatePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![SayThanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/mgohin)
 
 # What's new ?
+
+### Version 2.1.2
+Fixed [#100](https://github.com/arca-computing/MultipleDatePicker/issues/100)
 
 ### Version 2.1.1
 Fixed [#80](https://github.com/arca-computing/MultipleDatePicker/issues/80)
