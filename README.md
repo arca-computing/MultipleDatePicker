@@ -3,6 +3,11 @@
 
 # What's new ?
 
+### Version 2.1.3
+Merged [PR#101](https://github.com/arca-computing/MultipleDatePicker/pull/101) to pass moment variable through directive if you don't want to use global definition.
+
+Thanks to [panvourtsis](https://github.com/panvourtsis) for the PR :)
+
 ### Version 2.1.2
 Fixed [#100](https://github.com/arca-computing/MultipleDatePicker/issues/100)
 

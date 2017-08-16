@@ -96,5 +96,5 @@ gulp.task('create-and-push-release', ['uglify', 'styles', 'version'], function(c
 });
 
 /******* COMMAND LINE TASKS ******/
-gulp.task('default', ['uglify', 'styles']);
+gulp.task('default', ['copy', 'uglify', 'styles']);
 gulp.task('release', ['create-and-push-release']);
