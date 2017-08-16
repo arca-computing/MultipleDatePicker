@@ -146,6 +146,14 @@ angular.module('yourApp', [..., mdp]);
             <h1>
                 <a id="momentjs" class="anchor" href="#options" aria-hidden="true"><span aria-hidden="true"
                                                                                         class="octicon octicon-link"></span></a>Take a moment for MomentJS
+
+                <h2>
+                    <a id="momentjs-injection" class="anchor" href="#ngmodel" aria-hidden="true"><span aria-hidden="true"
+                                                                                                    class="octicon octicon-link"></span></a>Inject momentJS
+                </h2>
+                <p>You have 2 ways to inject momentJS. You do nothing and use the global variable or you pass it to the directive :</p>
+                <div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-en">moment</span> <span class="pl-k">=</span> <span class="pl-k">require</span>(<span class="pl-c1">'moment'</span>);</pre></div>
+                <pre>&lt;<span class="pl-ent">multiple-date-picker</span> <span class="pl-e">moment</span>=<span class="pl-s"><span class="pl-pds">"</span>moment<span class="pl-pds">"</span></span> /&gt;</pre>
                 <h2>
                     <a id="momentjs-locale" class="anchor" href="#ngmodel" aria-hidden="true"><span aria-hidden="true"
                                                                                             class="octicon octicon-link"></span></a>Change locale
@@ -710,6 +718,7 @@ angular.module('yourApp', [..., mdp]);
                     <li><a href="#add-it-in-your-html">Add it to your html</a></li>
                     <li><a href="#momentjs">MomentJS</a>
                         <ul>
+                            <li><a href="#momentjs-injection">Inject momentJS</a></li>
                             <li><a href="#momentjs-locale">Change locale</a></li>
                         </ul>
                     </li>

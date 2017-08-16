@@ -156,7 +156,9 @@
                 '</div>' +
                 '</div>',
                 link: function (scope) {
-                    var moment = moment || scope.moment;
+                    /*jshint ignore:start*/
+                    var moment = window['moment'] || scope.moment;
+                    /*jshint ignore:end*/
                     scope.ngModel = scope.ngModel || [];
 
                     /*utility functions*/
