@@ -130,7 +130,13 @@
                      * Number of years from scope.month to show in future in select
                      * note : will change year into a select
                      */
-                    changeYearFuture: '=?'
+                    changeYearFuture: '=?',
+
+                    /*
+                     * Type: function
+                     * The moment object with functions. Optional if you dont want it on the global scope
+                     */
+                    moment: '=?',
                 },
                 template: '<div class="multiple-date-picker">' +
                 '<div class="picker-top-row">' +
@@ -150,7 +156,7 @@
                 '</div>' +
                 '</div>',
                 link: function (scope) {
-
+                    var moment = moment || scope.moment;
                     scope.ngModel = scope.ngModel || [];
 
                     /*utility functions*/
