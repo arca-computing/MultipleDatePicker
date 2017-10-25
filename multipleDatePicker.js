@@ -131,6 +131,12 @@
                      * note : will change year into a select
                      */
                     changeYearFuture: '=?',
+                    /*
+                     * Type: bool
+                     * Allow months to be selected with a dropdown box
+                     * note : will change month into a select
+                     */
+                    enableSelectMonth: '=?',
 
                     /*
                      * Type: function
@@ -142,9 +148,10 @@
                 '<div class="picker-top-row">' +
                 '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="changeMonth($event, disableBackButton, -1)">&lt;</div>' +
                 '<div class="text-center picker-month">' +
-                '{{monthToDisplay}} ' +
+                '<span ng-if="!enableSelectMonth">{{monthToDisplay}}</span>' +
+                '<select ng-if="enableSelectMonth" ng-model="select.month" ng-change="changeMonthBySelect(select.month)" ng-options="m for m in monthsForSelect"></select>' +
                 '<span ng-if="yearsForSelect.length < 2">{{yearToDisplay}}</span>' +
-                '<select ng-if="yearsForSelect.length > 1" ng-model="year" ng-change="changeYear(year)" ng-options="y for y in yearsForSelect"></select>' +
+                '<select ng-if="yearsForSelect.length > 1" ng-model="select.year" ng-change="changeYear(select.year)" ng-options="y for y in yearsForSelect"></select>' +
                 '</div>' +
                 '<div class="text-center picker-navigate picker-navigate-right-arrow" ng-class="{\'disabled\':disableNextButton}" ng-click="changeMonth($event, disableNextButton, 1)">&gt;</div>' +
                 '</div>' +
@@ -282,6 +289,8 @@
                     scope.daysOfWeek = getDaysOfWeek();
                     scope.cssDaysOfSurroundingMonths = scope.cssDaysOfSurroundingMonths || 'picker-empty';
                     scope.yearsForSelect = [];
+                    scope.monthsForSelect = [];
+                    scope.select = {};
 
                     /**
                      * Called when user clicks a date
@@ -392,6 +401,16 @@
                         return css;
                     };
 
+                    function updateMonth(monthTo) {
+                        var oldMonth = moment(scope.month);
+                        scope.month = monthTo;
+                        scope.select.month = monthTo.format('MMMM');
+
+                        if (typeof scope.monthChanged == 'function') {
+                            scope.monthChanged(scope.month, oldMonth);
+                        }
+                    }
+
                     /*Navigate to another month*/
                     scope.changeMonth = function (event, disable, add) {
                         if (disable) {
@@ -412,14 +431,15 @@
                         }
 
                         if (!prevented) {
-                            var oldMonth = moment(scope.month);
-                            scope.month = monthTo;
-                            if (typeof scope.monthChanged == 'function') {
-                                scope.monthChanged(scope.month, oldMonth);
-                            }
+                            updateMonth(monthTo);
                         }
                     };
 
+                    /*Change month*/
+                    scope.changeMonthBySelect = function (monthName) {
+                        updateMonth(moment(scope.month).month(monthName));
+                    };
+                    
                     /*Change year*/
                     scope.changeYear = function (year) {
                         scope.month = scope.month.year(parseInt(year, 10));
@@ -453,10 +473,14 @@
 
                     /*Generate the calendar*/
                     scope.generate = function () {
-                        scope.year = scope.month.year().toString();
+                        scope.monthsForSelect = moment.months();
                         scope.yearsForSelect = getYearsForSelect();
                         scope.monthToDisplay = getMonthYearToDisplay();
                         scope.yearToDisplay = scope.month.format('YYYY');
+                        scope.select = {
+                            year: scope.month.year().toString(),
+                            month: scope.month.format('MMMM')
+                        };
                         var previousDay = moment(scope.month).date(0).day(scope.sundayFirstDay ? 0 : 1).subtract(1, 'day');
 
                         if (moment(scope.month).date(0).diff(previousDay, 'day') > 6) {
