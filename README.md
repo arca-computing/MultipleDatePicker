@@ -3,6 +3,9 @@
 
 # What's new ?
 
+### Version 2.1.5
+Merged [PR#104](https://github.com/arca-computing/MultipleDatePicker/pull/104) to use a dropdown select for month as for years
+
 ### Version 2.1.4 (2.1.3 fixed)
 Merged [PR#101](https://github.com/arca-computing/MultipleDatePicker/pull/101) to pass moment variable through directive if you don't want to use global definition.
 
