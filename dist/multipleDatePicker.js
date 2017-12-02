@@ -1,6 +1,6 @@
 /*
  @author : Maelig GOHIN For ARCA-Computing - www.arca-computing.fr
- @version: 2.1.5
+ @version: 2.1.6
 
  @description:  MultipleDatePicker is an Angular directive to show a simple calendar allowing user to select multiple dates.
  Css style can be changed by editing less or css stylesheet.
@@ -149,7 +149,7 @@
                 '<div class="text-center picker-navigate picker-navigate-left-arrow" ng-class="{\'disabled\':disableBackButton}" ng-click="changeMonth($event, disableBackButton, -1)">&lt;</div>' +
                 '<div class="text-center picker-month">' +
                 '<span ng-if="!enableSelectMonth">{{monthToDisplay}}</span>' +
-                '<select ng-if="enableSelectMonth" ng-model="select.month" ng-change="changeMonthBySelect(select.month)" ng-options="m for m in monthsForSelect"></select>' +
+                '<select ng-if="enableSelectMonth" ng-model="select.month" ng-change="changeMonthBySelect(select.month)" ng-options="m for m in monthsForSelect"></select>&nbsp;' +
                 '<span ng-if="yearsForSelect.length < 2">{{yearToDisplay}}</span>' +
                 '<select ng-if="yearsForSelect.length > 1" ng-model="select.year" ng-change="changeYear(select.year)" ng-options="y for y in yearsForSelect"></select>' +
                 '</div>' +

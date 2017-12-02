@@ -3,6 +3,9 @@
 
 # What's new ?
 
+### Version 2.1.6
+Fixed [#111](https://github.com/arca-computing/MultipleDatePicker/issues/111)
+
 ### Version 2.1.5
 Merged [PR#104](https://github.com/arca-computing/MultipleDatePicker/pull/104) to use a dropdown select for month as for years
 
