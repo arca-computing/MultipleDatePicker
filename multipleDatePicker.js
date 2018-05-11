@@ -53,6 +53,12 @@
                      * */
                     monthChanged: '=?',
                     /*
+                     * Type: function(newYear, oldYear)
+                     * Will be called when year changed
+                     * Param newYear/oldYear will be the first day of year at midnight
+                     * */
+                    yearChanged: '=?',
+                    /*
                      * Type: function(event, month)
                      * Will be called when trying to change month
                      * Param month will be the first day of month at midnight
@@ -318,6 +324,29 @@
                             day.mdp.selected = !day.mdp.selected;
                             if (day.mdp.selected) {
                                 scope.ngModel.push(day.date);
+
+                                if (event.ctrlKey || event.shiftKey) {
+                                    scope.ngModel.sort(function(a, b) {
+                                        return a - b;
+                                    });
+
+                                    for (var ci = 0; ci < scope.ngModel.length; ++ci) {
+                                        if (scope.ngModel[ci].isSame(day.date, 'day')) {
+                                            var previousSelectedDay = scope.ngModel[ci - 1];
+                                            if (previousSelectedDay === undefined) {
+                                                break;
+                                            }
+
+                                            var selectedDay = scope.ngModel[ci];
+                                            var betweenDay = moment(previousSelectedDay.format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days');
+                                            while (betweenDay < selectedDay) {
+                                                scope.ngModel.push(moment(betweenDay));
+                                                betweenDay = moment(betweenDay.format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days');
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
@@ -439,10 +468,14 @@
                     scope.changeMonthBySelect = function (monthName) {
                         updateMonth(moment(scope.month).month(monthName));
                     };
-                    
+
                     /*Change year*/
                     scope.changeYear = function (year) {
+                        var oldYear = moment(scope.month);
                         scope.month = scope.month.year(parseInt(year, 10));
+                        if (typeof scope.yearChanged === 'function') {
+                            scope.yearChanged(scope.month, oldYear);
+                        }
                     };
 
                     /*Check if the date is off : unselectable*/
