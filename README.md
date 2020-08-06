@@ -2,6 +2,8 @@
 [![SayThanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/mgohin)
 
 # Warning
+NO MORE SUPPORT, if you are here, you should upgrade to the latest Angular version ;)
+
 This is a Angular 1 directive ;)
 
 # What's new ?
